@@ -85,19 +85,6 @@ if 'username' in session:
 username = session['username'] # 있으면 해당 키에 대한 값을 꺼내서 
 return 'Logged in as ' + username + '<br>' + \ # 이 부분을 리턴시킨다. 
 
-"<b><a href = '/logout'>click here to log out</a></b>" 
-return "You are not logged in <br><a href = '/login'></b>" + \ "click here to log in</b></a>"
-
-@app.route('/setcookie', methods = ['POST', 'GET']) 
-def setcookie(): 
-if request.method == 'POST': user = request.form['nm'] 
-resp = make_response("Cookie Setting Complete") 
-resp.set_cookie('userID', user) 
-return resp @app.route('/getcookie') 
-
-def getcookie(): 
-name = request.cookies.get('userID') 
-return '<h1>welcome '+name+'</h1>' if __name__ == '__main__': app.run(debug = True)
 '''
 
 

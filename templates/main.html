@@ -15,12 +15,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <!-- 구글폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 
-    <title>Book Study Planner</title>
+    <title>main.html</title>
 
     <!-- style -->
     <style type="text/css">
@@ -33,21 +34,50 @@
             margin: auto;
         }
 
-        #input-box {
-            width: 400px;
-            margin: 10px;
-            /* position: left; */
-        }
+        /* .default {
+            
+        } */
 
-        .card {
-            /* margin: auto; */
-            padding: 10px;
-
-        }
-        #modal {
+        .defaul_content {
             width: 100%;
+            height: 200px;
+            border: 5px black;
         }
     </style>
+
+    <script type="text/javascript"> 
+    
+    function agree() { 
+        var chkbox = document.getElementsByName('agree'); 
+        var chk = false; 
+        for(var i=0 ; i<chkbox.length ; i++) 
+        { 
+            if(chkbox[i].checked) chk = true; 
+            else { chk = false; } 
+        } 
+        if(chk) 
+        { 
+            alert("모든 약관에 동의함."); 
+            return false; 
+        } 
+        else 
+        { 
+            alert("모든 약관에 동의해 주세요.") 
+        } 
+     } 
+
+    function doOpenCheck(chk){
+    var obj = document.getElementsByName("aaa");
+    for(var i=0; i<obj.length; i++){
+        if(obj[i] != chk){
+            obj[i].checked = false;
+        }
+    }
+}
+    </script> 
+
+
+
     <!-- <script>
         $(document).ready(function () {
             $("#cards-box").html("");
@@ -146,12 +176,33 @@
 </head>
 
 <body>
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    [Modal] 콘텐츠 추가
+[Modal] 콘텐츠 추가</button>
+
+    <div class="wrap">
+        <div class="jumbotron">
+            <input type="radio" name="chk_info" checked="checked" value="register"> 등록 순서
+            <input type="radio" name="chk_info" value="book"> 책별 순서
+            <input type="radio" name="chk_info" value="importance"> 중요도 순서
+        </div>
+
+        <div class = "default-line">
+
+        </div>
+        <div>
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-light defaul_content" data-toggle="modal" data-target="#exampleModalCenter"><img src="../static/css/plus.png"/>
   </button>
   
-  <!-- Modal -->
+
+
+
+
+
+
+<!-- Modal -->
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -167,11 +218,11 @@
                   책 종류
                   <br>
                   <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%;">
-                      <label class "btn btn-secondary active">
+                      <label>
                           <input type="radio" name="options" id="option1" autocomplete="off" checked> 뚜잇!파이썬
                           &nbsp;&nbsp;&nbsp;
                       </label>
-                      <label class "btn btn-secondary">
+                      <label >
                           <input type="radio" name="options" id="option2" autocomplete="off"> INTRO..ALGO..
                           &nbsp;&nbsp;&nbsp;
                       </label>
@@ -210,6 +261,7 @@
       </div>
     </div>
   </div>
+
   <div class="card" style="width: 100%; margin-top: 10px;">
     <div>
         <div class="col">
