@@ -1,0 +1,33 @@
+****************user table*****************
+
+- userid(아이디)
+
+- password(비밀번호)
+
+
+
+
+****************content table*****************
+
+- title(컨텐츠 제목, string)
+
+- memo(컨텐츠 내용, string)
+
+- booktitle(책제목, string)
+
+- writer(작성자, string)
+
+- importance(중요도, int)
+
+- completed(완료되었으면 True, bool)
+
+- created_datetime(생성시각, datetime) or created_date(생성일, date)
+	화면에는 생성일만 띄워주면 되는데,
+	등록순 정렬을 할 때 정렬기준이 되려면 날짜 + 시각을 모두 저장해야할 것 같아서 고민이에요
+
+- closing_date(마감시각, date)
+	이것도 화면에는 마감일만 띄워주면 되는데,
+	특정 시각에 어떤 처리를 해주려면 시각을 저장해야할 것 같아요.
+	아니면 마감시각을 없애버리는 것도..? 생각해볼 수 있을 것 같아요.
+
+
