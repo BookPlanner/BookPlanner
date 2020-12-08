@@ -15,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- 구글폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
@@ -42,6 +43,9 @@
             /* margin: auto; */
             padding: 10px;
 
+        }
+        #modal {
+            width: 100%;
         }
     </style>
     <!-- <script>
@@ -142,25 +146,106 @@
 </head>
 
 <body>
-    <div class="wrap">
-        <div class="jumbotron">
-            <h2 class="display-4">Book Study Planner <span class="badge badge-secondary">ver2.0</span></h2>
-            <div id="input-box">
-                <div class="form-group">
-                    <input id="memo-title" class="form-control" placeholder="ID를 입력하세요">
-                </div>
-                <div class="form-group">
-                    <textarea id="memo" class="form-control" rows="3" placeholder="내용을 입력하세요"></textarea>
-                </div>
-                <button type="button" class="btn btn-primary" onclick="postMemo()">저장하기</button>
-            </div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    [Modal] 콘텐츠 추가
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">추가하기</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-
-        <div id="cards-box" class="card-columns">
-
+        <div class="modal-body">
+          <ul class="list-group">
+              <li class="list-group-item">
+                  책 종류
+                  <br>
+                  <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%;">
+                      <label class "btn btn-secondary active">
+                          <input type="radio" name="options" id="option1" autocomplete="off" checked> 뚜잇!파이썬
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label class "btn btn-secondary">
+                          <input type="radio" name="options" id="option2" autocomplete="off"> INTRO..ALGO..
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label>
+                          <input type="radio" name="options" id="option3" autocomplete="off"> 컴퓨터시스템
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                  </div>
+              </li>
+              <li class="list-group-item active">
+                  <b>제목</b>
+                  <br>
+                  <input type="text" id="subject" style="width:100%;"> <!--꽉차도록-->
+              </li>
+              <li class="list-group-item">
+                  <b>내용</b>
+                  <br>
+                  <textarea type="text" id="context" style="width:100%;"></textarea>
+              </li>
+              <li class="list-group-item">
+                  <b>마감기한</b>                
+                  <br>
+                  <input type="date" id="date" style="width:100%;">
+              </li>
+              <li class="list-group-item">
+                  <b>우선순위</b>
+                  <br>
+                  <input type="range" id="priority" style="width:100%;">
+              </li>
+          </ul>
         </div>
-
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary">추가</button>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="card" style="width: 100%; margin-top: 10px;">
+    <div>
+        <div class="col">
+    <div class="col">
+    <div class="row">
+        <div class="col">
+            이 책은 5개월동안 볼수가 없어.
+        </div>
+        <div class="col">
+            컴퓨터시스템
+        </div>
+        <div class="col">
+            등록일
+        </div>
+        <div class="col">
+            마감일
+        </div>
+        <div class="col">
+            등록인
+        </div>
+        <div class="col">
+            중요도
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            내용
+        </div>
+    </div>
+</div>
+        </div>
+        <hr>
+    <button type="button" class="btn btn-outline-primary btn-sm" style="margin-right: 5px;">수정</button>
+    <button type="button" class="btn btn-outline-danger btn-sm">삭제</button>
+  </div>
+</div>
 </body>
 
 </html>

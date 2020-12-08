@@ -66,6 +66,10 @@ def logout():
     session.clear()
     return redirect('/')
 
+@app.route('/main')
+def main():
+    
+    return render_template('main.html')
 
 '''
 # 로그인확인 구현할때 참고하려고 넣어놓은 주석
