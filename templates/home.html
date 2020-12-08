@@ -1,0 +1,161 @@
+<!Doctype html>
+<html lang="ko">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+
+    <title>home.html</title>
+
+    <!-- style -->
+    <style type="text/css">
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .wrap {
+            width: 1100px;
+            margin: auto;
+        }
+
+        #input-box {
+            width: 400px;
+            margin: 10px;
+            /* position: left; */
+        }
+
+        .card {
+            /* margin: auto; */
+            padding: 10px;
+
+        }
+    </style>
+    <!-- <script>
+        $(document).ready(function () {
+            $("#cards-box").html("");
+            showMemos();
+        });
+
+        function postMemo() {
+            let title = $("#memo-title").val();
+            let memo = $("#memo").val();
+            $.ajax({
+                type: "POST",
+                url: "/memo",
+                data: { title_give: title, memo_give: memo },
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        alert("저장 완료!");
+                        window.location.reload();
+                    } else {
+                        alert("서버 오류!")
+                    }
+                }
+            })
+        }
+
+        function showMemos() {
+            $.ajax({
+                type: "GET",
+                url: "/memo",
+                data: {},
+                success: function (response) {
+                    let memos = response["memos"];
+                    console.log(memos);
+                    for (let i = 0; i < memos.length; i++) {
+                        let tempHtml = `<div id="card-${i}" class="card">
+                                <h4 class="card-title"> ${memos[i]["title"]} </h4>
+                                <p class="card-text">${memos[i]["memo"]}</p>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="modifyMemo('${i}','${memos[i]["title"]}','${memos[i]["memo"]}')">수정</button>
+                                <button type="button" class="btn btn-dark btn-sm" onclick="deleteMemo('${memos[i]["title"]}')">삭제</button>
+                            </div>`
+                        $("#cards-box").append(tempHtml);
+                    }
+                }
+            })
+        }
+
+        function deleteMemo(title) {
+            $.ajax({
+                type: "POST",
+                url: "/memo/delete",
+                data: { 'title_give': title },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert('삭제 완료!')
+                        window.location.reload()
+                    }
+                }
+            });
+        }
+
+        function modifyMemo(memo_id, title, memo) {
+            $('#card-' + memo_id).empty();
+            tempHtml = `<div class="form-group"> 
+                   <input id="memo-title-change" class="form-control" value="${title}">   
+                   </div>
+                   <div class="form-group">
+                   <textarea id="memo-change" class="form-control" rows="2">${memo}</textarea>
+                   </div>
+              <button type="button" class="btn btn-primary btn-sm" onclick="changeMemo('${title}')">저장</button>`
+
+            $('#card-' + memo_id).append(tempHtml);
+        }
+
+        function changeMemo(old_title) {
+            let new_title = $("#memo-title-change").val();
+            let new_memo = $("#memo-change").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/memo/change",
+                data: { old_title_give: old_title, title_give: new_title, memo_give: new_memo },
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        alert("수정 완료!");
+                        window.location.reload();
+                    } else {
+                        alert("서버 오류!")
+                    }
+                }
+            })
+        }
+
+
+
+    </script> -->
+
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="jumbotron">
+            <h2 class="display-4">Book Study Planner</h2>
+            <div>
+                <button type="button" class="btn btn-primary" onclick="postMemo()">로그인</button>
+                <button type="button" class="btn btn-primary" onclick="postMemo()">회원가입</button>
+            </div>
+        </div>
+
+        <div id="cards-box" class="card-columns">
+
+        </div>
+
+    </div>
+</body>
+
+</html>
