@@ -9,15 +9,17 @@
 
 ****************content table*****************
 
+- card_id(고유id)
+
 - title(컨텐츠 제목, string)
 
-- memo(컨텐츠 내용, string)
+- context(컨텐츠 내용, string)
 
 - booktitle(책제목, string)
 
 - writer(작성자, string)
 
-- importance(중요도, int)
+- priority(중요도, int)
 
 - completed(완료되었으면 True, bool)
 
