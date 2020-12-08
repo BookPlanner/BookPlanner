@@ -37,7 +37,7 @@ def signin():
             'password':password
         }
         db.user.insert_one(data)
-        return jsonify({'msg': "회원가입 완료"})
+        return jsonify({'msg': "회원가입 완료", '어디로 연결할까요?':'홈 화면 or 메인페이지'})
     # 정상적으로 회원가입이 완료되고난 후 home 화면으로 이동(추후에 메인페이지나 로그인 페이지로 변경 가능)
     return redirect('/')
 
@@ -60,7 +60,11 @@ def login():
                 return redirect('/')
         return jsonify({'msg':'잘못된 정보'})
 
-
+# 로그아웃
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
 
 
 '''
