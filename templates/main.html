@@ -210,7 +210,7 @@
     <div class="row" > 
         <div class="col-5" style="margin-left: 10px">
             <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
-            <div style="margin-left: 20px; margin-top: 10px;""><b>CentOS 제작 과정 링크.</b></div>
+            <div style="margin-left: 20px; margin-top: 10px;"><b>CentOS 제작 과정 링크.</b></div>
         </div>
         <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
             2020-12-01 23:20    
@@ -314,9 +314,8 @@
         var context = $('textarea#context').val();
         var priority = $('input[name=priority]').val();
         var booktitle = $('input[name="options"]:checked').val();
-        //var writer = 로그인 유저 어떻게 가져올지 찾아보기
         
-        alert(title+" "+context+" "+priority+" "+booktitle)  // 테스트완료
+        alert(title+" "+context+" "+priority+" "+booktitle)  
 
         $.ajax({
         type: "POST",
