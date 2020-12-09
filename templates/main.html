@@ -190,7 +190,7 @@
   <!-- card1 start -->
   <div id="cards-box">
     <!-- 서버에서 보내준 데이터(cards) 받아오기 -->
-    {% for card in data %} 
+    {% for card in cards %}
 
     <!-- 테스트 코드 여기부터-->
     {{ card }}
@@ -240,14 +240,14 @@
     <div class="row justify-content-between">
     <div class="col-4">
     <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;">수정</button>
-    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;">삭제</button>
+    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard()">삭제</button>
     </div>
     <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
         {{ card['writer']}}
     </div>
     
 </div>
-<input type="hidden" value="{{ card['card_id'] }}" name="{{ card['card_id'] }}">
+<input type="hidden" id="card_id" value="{{ card['card_id'] }}" name="{{ card['card_id'] }}">
   </div>
 </span>
 </div>
@@ -407,5 +407,26 @@
                 result += characters.charAt(index);
             }
             return result;
+    }
+
+    function deleteCard(){
+        let cardId = $('input[id=card_id]').val();
+        $.ajax({
+        type: "DELETE",
+        url: '/main',
+        data: {
+            'card_id_give' : cardId
+            
+        },
+        success: function (response) {
+            
+
+            alert("삭제되었습니다")
+
+            window.location.reload();
+
+            
         }
+    });
+    }
 </script>

@@ -64,12 +64,13 @@ def logout():
     session.clear()
     return redirect('/')
 
-@app.route('/main', methods=['GET','POST'])
+@app.route('/main', methods=['GET','POST', 'DELETE'])
 def main():
     if request.method == 'GET':
-        cards = list(db.main.find({},{'_id':0}))
-        return render_template("main.html", data=cards)
-    else:
+        cards = list(db.main.find({},{'_id':0}).sort('created_datetime', -1))
+        return render_template("main.html", cards=cards)
+
+    elif request.method == 'POST':
         card_id_receive = request.form['card_id_give']
         booktitle_receive = request.form['booktitle_give']
         title_receive = request.form['title_give']
@@ -94,11 +95,12 @@ def main():
         }
         db.main.insert_one(data)
         return redirect('/main')
+    else:
+        card_id_receive = request.form['card_id_give']
+        db.main.delete_one({ "card_id": card_id_receive })
+        return render_template('main.html')
     
-@app.route('/main/list', methods=['GET','POST'])
-def mainlisting():
-    cards = list(db.main.find({},{'_id':0}.sort('created_datetime', -1)))
-    return render_template("main.html", cards=cards)
+
 
 '''
 # 로그인확인 구현할때 참고하려고 넣어놓은 주석
