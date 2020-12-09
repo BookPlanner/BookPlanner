@@ -258,6 +258,75 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
           <button type="button" class="btn btn-primary">추가</button>
         </div>
+        <div>
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-light defaul_content" data-toggle="modal" data-target="#exampleModalCenter"><img src="../static/css/plus.png"/>
+  </button>
+  
+
+
+
+
+
+
+<!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">추가하기</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+              <li class="list-group-item">
+                  책 종류
+                  <br>
+                  <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%;">
+                      <label>
+                          <input type="radio" name="options" id="option1" autocomplete="off" value="뚜잇!파이썬" checked> 뚜잇!파이썬
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label >
+                          <input type="radio" name="options" id="option2" autocomplete="off" value="INTRO..ALGO.."> INTRO..ALGO..
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label>
+                          <input type="radio" name="options" id="option3" autocomplete="off" value="컴퓨터시스템"> 컴퓨터시스템
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                  </div>
+              </li>
+              <li class="list-group-item active">
+                  <b>제목</b>
+                  <br>
+                  <!-- name 태그를 넣어야 js에서 데이터를 가져올 수 있음 -->
+                  <input type="text" id="title" name="title" style="width:100%;"> <!--꽉차도록-->
+              </li>
+              <li class="list-group-item">
+                  <b>내용</b>
+                  <br>
+                  <textarea type="text" id="context" name="context" style="width:100%;"></textarea>
+              </li>
+              <!-- <li class="list-group-item">
+                  <b>마감기한</b>                
+                  <br>
+                  <input type="date" id="date" style="width:100%;">
+              </li> -->
+              <li class="list-group-item">
+                  <b>우선순위</b>
+                  <br>
+                  <input type="range" id="priority" name="priority" style="width:100%;">
+              </li>
+              <input type="hidden" value="${loginUser}" name="loginUser">
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary" onclick="createCard()">추가</button>
+        </div>
       </div>
     </div>
   </div>
@@ -298,7 +367,52 @@
     <button type="button" class="btn btn-outline-danger btn-sm">삭제</button>
   </div>
 </div>
-
 </body>
 
 </html>
+<script>
+    function createCard(){
+        var title = $('input[name=title]').val();
+        var context = $('textarea#context').val();
+        var priority = $('input[name=priority]').val();
+        var booktitle = $('input[name="options"]:checked').val();
+        //var writer = 로그인 유저 어떻게 가져올지 찾아보기
+        
+        alert(title+" "+context+" "+priority+" "+booktitle)  // 테스트완료
+
+        $.ajax({
+        type: "POST",
+        url: '/main',
+        data: {
+            'card_id_give' : genRandomName(10),
+            'title_give': title,
+            'context_give': context,
+            'priority_give': priority,
+            'booktitle_give': booktitle
+        },
+        success: function (response) {
+            if (response['result'] == 'success') {
+                let card = response['card'];
+
+                alert("저장완료")
+                // $('#exampleModal').modal('hide');
+                // $('#exampleModal').hide();
+                window.location.reload();
+
+            }
+        }
+    });
+    }
+
+    function genRandomName(length) {
+            let result = '';
+            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let charactersLength = characters.length;
+            for (let i = 0; i < length; i++) {
+                let number = Math.random() * charactersLength;
+                let index = Math.floor(number);
+                result += characters.charAt(index);
+            }
+            return result;
+        }
+</script>

@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session,jsonify, redirect
+import datetime
 app = Flask(__name__)
 app.secret_key = 'jeongseojeongseo' # secret key는 랜덤 문자열로 설정
 from pymongo import MongoClient           # pymongo를 임포트 하기(패키지 인스톨 먼저 해야겠죠?)
@@ -66,6 +67,35 @@ def logout():
     session.clear()
     return redirect('/')
 
+@app.route('/main', methods=['GET','POST'])
+def main():
+    if request.method == 'GET':
+        return render_template('main.html')
+    else:
+        card_id_receive = request.form['card_id_give']
+        booktitle_receive = request.form['booktitle_give']
+        title_receive = request.form['title_give']
+        context_receive = request.form['context_give']
+        priority_receive = request.form['priority_give']
+        # writer 추가 수정 필요
+        completed = False
+        private = False
+        created_datetime = datetime.datetime.now()
+
+        data = {
+            'card_id' : card_id_receive,
+            'title' : title_receive,
+            'context' : context_receive,
+            'priority' : priority_receive,
+            'booktitle' : booktitle_receive,
+            'completed' : completed,
+            'private' : private,
+            'created_datetime' : created_datetime
+
+        }
+        db.main.insert_one(data)
+        return redirect('/main')
+    
 
 '''
 # 로그인확인 구현할때 참고하려고 넣어놓은 주석
@@ -81,19 +111,6 @@ if 'username' in session:
 username = session['username'] # 있으면 해당 키에 대한 값을 꺼내서 
 return 'Logged in as ' + username + '<br>' + \ # 이 부분을 리턴시킨다. 
 
-"<b><a href = '/logout'>click here to log out</a></b>" 
-return "You are not logged in <br><a href = '/login'></b>" + \ "click here to log in</b></a>"
-
-@app.route('/setcookie', methods = ['POST', 'GET']) 
-def setcookie(): 
-if request.method == 'POST': user = request.form['nm'] 
-resp = make_response("Cookie Setting Complete") 
-resp.set_cookie('userID', user) 
-return resp @app.route('/getcookie') 
-
-def getcookie(): 
-name = request.cookies.get('userID') 
-return '<h1>welcome '+name+'</h1>' if __name__ == '__main__': app.run(debug = True)
 '''
 
 
