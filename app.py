@@ -111,15 +111,14 @@ def main():
         return render_template('main.html')
     
 # 카드 수정
-@app.route('/main/update', methods=['GET','POST'])
-def update():
+@app.route('/main/<userId>', methods=['GET','POST'])
+def update(userId):
     if request.method == 'GET':
-        pass
-    else:
-        card_id_receive = request.form['target_card_id_give']
-        target_card = db.main.find_one({'card_id':card_id_receive},{'_id':0})
-        print(target_card)
+        target_card = db.main.find_one({'card_id':userId},{'_id':0})
+        print(userId)
         return render_template('main.html', target_card = target_card)
+    else:
+        return render_template('main.html')
         
 @app.route('/main/book', methods=['GET'])
 def sorting_book():
