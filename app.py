@@ -67,6 +67,8 @@ def logout():
 @app.route('/main', methods=['GET','POST'])
 def main():
     if request.method == 'GET':
+        cards = list(db.messages.find({'_id': False}).sort('created_datetime', -1))
+        print(cards)
         return render_template('main.html')
     else:
         card_id_receive = request.form['card_id_give']
