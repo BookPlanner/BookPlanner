@@ -139,7 +139,18 @@
 
     </script> -->
     <script>
-        
+        function logout(){
+            location.href = "/logout"
+        }
+        function login(){
+            location.href = "/login"
+        }
+        function signin(){
+            location.href = "/signin"
+        }
+        function main(){
+            location.href = "/main"
+        }
     </script>
 
 </head>
@@ -152,22 +163,12 @@
                 {% if session['username'] %}
                 <h3>{{session['username']}}님 환영합니다<br></h3>
                 <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
-                
+                <button type="button" class="btn btn-primary" onclick="main()">플래너</button>
                 {% else %}
                 <button type="button" class="btn btn-primary" onclick="login()">로그인</button>
                 <button type="button" class="btn btn-primary" onclick="signin()">회원가입</button>
                 {% endif %}
-                <script>
-                    function logout(){
-                        location.href = "/logout"
-                    }
-                    function login(){
-                        location.href = "/login"
-                    }
-                    function signin(){
-                        location.href = "/signin"
-                    }
-                </script>
+                
             </div>
         </div>
 
