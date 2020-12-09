@@ -400,13 +400,8 @@
         </div>
     <div class="row justify-content-between">
     <div class="col-4">
-<<<<<<< HEAD
-    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" data-toggle="modal" data-target="#modifyModalCenter" onclick="inqueryCard()">수정</button>
-    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard()">삭제</button>
-=======
     <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" onclick="updateCard('{{ card["card_id"] }}')">수정</button>
     <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
->>>>>>> upstream/main
     </div>
     <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
         {{ card['writer']}}
