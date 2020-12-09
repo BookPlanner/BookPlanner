@@ -261,7 +261,79 @@
     </div>
   </div>
 
-
+<!-- modify Modal -->
+  <div class="modal fade" id="modifyModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">수정하기</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+              <li class="list-group-item">
+                  책 종류
+                  <br>
+                  <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%">
+                      <label>
+                          <input type="radio" name="options" id="option1" autocomplete="off" value="뚜잇!파이썬" checked> 뚜잇!파이썬
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label >
+                          <input type="radio" name="options" id="option2" autocomplete="off" value="INTRO..ALGO.."> INTRO..ALGO..
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label>
+                          <input type="radio" name="options" id="option3" autocomplete="off" value="컴퓨터시스템"> 컴퓨터시스템
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                  </div>
+              </li>
+              <li class="list-group-item">
+                  <b>제목</b>
+                  <br>
+                  <!-- name 태그를 넣어야 js에서 데이터를 가져올 수 있음 -->
+                  <input type="text" id="title" name="title" style="width:100%;"> <!--꽉차도록-->
+              </li>
+              <li class="list-group-item">
+                  <b>내용</b>
+                  <br>
+                  <textarea type="text" id="context" name="context" style="width:100%;"></textarea>
+              </li>
+              <!-- <li class="list-group-item">
+                  <b>마감기한</b>                
+                  <br>
+                  <input type="date" id="date" style="width:100%;">
+              </li> -->
+              <li class="list-group-item">
+                  <b>우선순위</b>
+                  <br>
+                  <input type="range" id="priority" name="priority" style="width:100%;">
+              </li>
+              <li class="list-group-item">
+                <b>보호수준</b>
+                <br>
+                <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-secondary active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Public
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> Private
+                  </label>
+                </div>
+            </li>
+              <input type="hidden" value="${loginUser}" name="loginUser">
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-danger" onclick="">수정</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <!-- card1 start -->
