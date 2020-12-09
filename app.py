@@ -114,12 +114,13 @@ def main():
 @app.route('/main/<userId>', methods=['GET','POST'])
 def update(userId):
     if request.method == 'GET':
-        target_card = db.main.find_one({'card_id':userId},{'_id':0})
+        cards = db.main.find_one({'card_id':userId},{'_id':0})
         print(userId)
-        return render_template('main.html', target_card = target_card)
+        return render_template("main.html", t_cards=cards)
     else:
         return render_template('main.html')
-        
+
+# 정렬기능
 @app.route('/main/book', methods=['GET'])
 def sorting_book():
     if request.method == 'GET':
@@ -132,7 +133,6 @@ def sorting_book():
 def sorting_priority():
     if request.method == 'GET':
         cards = list(db.main.find({},{'_id':0}).sort('priority', -1))
-        print(cards)
         return render_template("main.html", cards=cards)
     else:
         return render_template("main.html", cards=cards)

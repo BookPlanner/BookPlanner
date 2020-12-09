@@ -48,7 +48,7 @@
 
         .default_content {
             width: 100%;
-            height: 200px;
+            height: 130px;
             border: 5px black;
         }
         
@@ -96,7 +96,7 @@
         var booktitle = $('input[name="options"]:checked').val();
         var private = $('input[name="private"]:checked').val();
 
-        alert(title+" "+context+" "+priority+" "+booktitle+" "+private)  
+         
 
         $.ajax({
         type: "POST",
@@ -110,15 +110,15 @@
             'private_flag':private
         },
         success: function (response) {
-            if (response['result'] == 'success') {
-                let card = response['card'];
+            
+            let card = response['card'];
 
-                alert("저장완료")
-                // $('#exampleModal').modal('hide');
-                // $('#exampleModal').hide();
-                window.location.reload();
+            alert("저장완료")
+            // $('#exampleModal').modal('hide');
+            // $('#exampleModal').hide();
+            window.location.reload();
 
-            }
+            
         }
     });
     }
@@ -138,10 +138,9 @@
     function updateCard(cardId){
         
         $.ajax({
-        type: "POST",
-        url: '/main/update',
+        type: "GET",
+        url: '/main/'+cardId,
         data: {
-            'target_card_id_give' : cardId
         },
         success: function (response) {
              
