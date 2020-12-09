@@ -64,12 +64,15 @@ def logout():
     session.clear()
     return redirect('/')
 
+# 카드 생성
 @app.route('/main', methods=['GET','POST', 'DELETE'])
 def main():
+    # 카드 listing
     if request.method == 'GET':
         cards = list(db.main.find({},{'_id':0}).sort('created_datetime', -1))
         return render_template("main.html", cards=cards)
 
+    # 카드 create
     elif request.method == 'POST':
         card_id_receive = request.form['card_id_give']
         booktitle_receive = request.form['booktitle_give']
@@ -96,12 +99,27 @@ def main():
         }
         db.main.insert_one(data)
         return redirect('/main')
+    # 카드 delete
     else:
         card_id_receive = request.form['card_id_give']
         db.main.delete_one({ "card_id": card_id_receive })
         return render_template('main.html')
     
+# 카드 수정
+@app.route('/main/update', methods=['GET','POST'])
+def update():
+    if request.method == 'GET':
+        pass
+    else:
+        card_id_receive = request.form['target_card_id_give']
+        target_card = db.main.find_one({'card_id':card_id_receive},{'_id':0})
+        
+        return render_template('main.html', target_card = target_card)
+        
 
+<<<<<<< HEAD
+        
+=======
 
 '''
 # 로그인확인 구현할때 참고하려고 넣어놓은 주석
@@ -118,6 +136,7 @@ username = session['username'] # 있으면 해당 키에 대한 값을 꺼내서
 return 'Logged in as ' + username + '<br>' + \ # 이 부분을 리턴시킨다. 
 '''
 
+>>>>>>> upstream/main
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

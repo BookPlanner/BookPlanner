@@ -84,6 +84,83 @@
     }
 }
     </script> 
+
+<script>
+ 
+    function createCard(){
+        var title = $('input[name=title]').val();
+        var context = $('textarea#context').val();
+        var priority = $('input[name=priority]').val();
+        var booktitle = $('input[name="options"]:checked').val();
+        var private = $('input[name="private"]:checked').val();
+
+        alert(title+" "+context+" "+priority+" "+booktitle+" "+private)  
+
+        $.ajax({
+        type: "POST",
+        url: '/main',
+        data: {
+            'card_id_give' : genRandomName(10),
+            'title_give': title,
+            'context_give': context,
+            'priority_give': priority,
+            'booktitle_give': booktitle
+        },
+        success: function (response) {
+            if (response['result'] == 'success') {
+                let card = response['card'];
+
+                alert("저장완료")
+                // $('#exampleModal').modal('hide');
+                // $('#exampleModal').hide();
+                window.location.reload();
+
+            }
+        }
+    });
+    }
+
+    function genRandomName(length) {
+            let result = '';
+            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let charactersLength = characters.length;
+            for (let i = 0; i < length; i++) {
+                let number = Math.random() * charactersLength;
+                let index = Math.floor(number);
+                result += characters.charAt(index);
+            }
+            return result;
+    }
+
+    function updateCard(cardId){
+        
+        $.ajax({
+        type: "POST",
+        url: '/main/update',
+        data: {
+            'target_card_id_give' : cardId
+        },
+        success: function (response) {
+             
+        }
+    });
+    }
+    function deleteCard(cardId){
+        
+        $.ajax({
+        type: "DELETE",
+        url: '/main',
+        data: {
+            'card_id_give' : cardId
+            
+        },
+        success: function (response) {
+            alert("삭제되었습니다")
+            window.location.reload();   
+        }
+    });
+    }
+</script>
 </head>
 
 <body>
@@ -166,10 +243,10 @@
                 <br>
                 <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-secondary active">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Public
+                    <input type="radio" name="private" id="option1" autocomplete="off" checked> Public
                   </label>
                   <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="option2" autocomplete="off"> Private
+                    <input type="radio" name="private" id="option2" autocomplete="off"> Private
                   </label>
                 </div>
             </li>
@@ -323,15 +400,20 @@
         </div>
     <div class="row justify-content-between">
     <div class="col-4">
+<<<<<<< HEAD
     <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" data-toggle="modal" data-target="#modifyModalCenter" onclick="inqueryCard()">수정</button>
     <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard()">삭제</button>
+=======
+    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" onclick="updateCard('{{ card["card_id"] }}')">수정</button>
+    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
+>>>>>>> upstream/main
     </div>
     <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
         {{ card['writer']}}
     </div>
     
 </div>
-<input type="hidden" id="card_id" value="{{ card['card_id'] }}" name="{{ card['card_id'] }}">
+<input type="hidden" id="{{ card['card_id'] }}" name="card_id" value="{{ card['card_id'] }}">
   </div>
 </span>
 </div>
@@ -447,70 +529,3 @@
 </body>
 
 </html>
-<script>
- 
-    function createCard(){
-        var title = $('input[name=title]').val();
-        var context = $('textarea#context').val();
-        var priority = $('input[name=priority]').val();
-        var booktitle = $('input[name="options"]:checked').val();
-        
-        alert(title+" "+context+" "+priority+" "+booktitle)  
-
-        $.ajax({
-        type: "POST",
-        url: '/main',
-        data: {
-            'card_id_give' : genRandomName(10),
-            'title_give': title,
-            'context_give': context,
-            'priority_give': priority,
-            'booktitle_give': booktitle
-        },
-        success: function (response) {
-            if (response['result'] == 'success') {
-                let card = response['card'];
-
-                alert("저장완료")
-                // $('#exampleModal').modal('hide');
-                // $('#exampleModal').hide();
-                window.location.reload();
-
-            }
-        }
-    });
-    }
-
-    function genRandomName(length) {
-            let result = '';
-            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let charactersLength = characters.length;
-            for (let i = 0; i < length; i++) {
-                let number = Math.random() * charactersLength;
-                let index = Math.floor(number);
-                result += characters.charAt(index);
-            }
-            return result;
-    }
-
-    function deleteCard(){
-        let cardId = $('input[id=card_id]').val();
-        $.ajax({
-        type: "DELETE",
-        url: '/main',
-        data: {
-            'card_id_give' : cardId
-            
-        },
-        success: function (response) {
-            
-
-            alert("삭제되었습니다")
-
-            window.location.reload();
-
-            
-        }
-    });
-    }
-</script>
