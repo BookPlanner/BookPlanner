@@ -239,7 +239,7 @@
                   <input type="range" id="priority" name="priority" style="width:100%;">
               </li>
               <li class="list-group-item">
-                <b>보호수준</b>
+                <b>수준</b>
                 <br>
                 <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-secondary active">
@@ -399,8 +399,8 @@
 </div>
         </div>
     <div class="row justify-content-between">
-    <div class="col-4">
-    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" onclick="updateCard('{{ card["card_id"] }}')">수정</button>
+    <div class="col-4"> 
+    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" onclick="updateCard('{{ card["card_id"] }}')" data-toggle="modal" data-target="#modifyModalCenter">수정</button>
     <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
     </div>
     <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
