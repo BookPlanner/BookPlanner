@@ -39,11 +39,17 @@
             z-index: 0;
         }
 
+        .sort {
+            text-align: right; 
+            margin-top: 10px;
+        }
+
         .default_content {
             width: 100%;
             height: 200px;
             border: 5px black;
         }
+        
     </style>
 
     <script type="text/javascript"> 
@@ -77,26 +83,35 @@
 }
     </script> 
 </head>
+
 <body>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">[Modal] 콘텐츠 추가</button>
+
+
+
+
+
+
+
 
     <div class="wrap">
-        <div class="jumbotron">
-            <input type="radio" name="chk_info" checked="checked" value="register"> 등록 순서
-            <input type="radio" name="chk_info" value="book"> 책별 순서
-            <input type="radio" name="chk_info" value="importance"> 중요도 순서
-        </div>
+        <div style="text-align: center; margin-top: 30px; font-size: 50px;">
+            <strong> Book Mark </strong>
+            <div align="right">
+               <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
+           </div>
+       </div>
+    <div>
 
-        <div class = "default-line">
-
-        </div>
-        <div>
-            <!-- Button trigger modal -->
+<!-- Button trigger modal -->
 <button type="button" class="btn btn-light default_content" data-toggle="modal" data-target="#exampleModalCenter"><img src="../static/css/plus.png"/>
   </button>
   
+  <div class="sort">
+    <input  id="id1" type="radio" name="chk_info" checked="checked" value="register"><label for="id1">등록 순서</label> 
+    <input  id="id2" type="radio" name="chk_info" value="book"> <label for="id2">책별 순서</label>
+    <input  id="id3" type="radio" name="chk_info" value="importance"> <label for="id3">중요도 순서</label>
+</div>
 
 <!-- Modal -->
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -113,7 +128,7 @@
               <li class="list-group-item">
                   책 종류
                   <br>
-                  <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%;">
+                  <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%">
                       <label>
                           <input type="radio" name="options" id="option1" autocomplete="off" value="뚜잇!파이썬" checked> 뚜잇!파이썬
                           &nbsp;&nbsp;&nbsp;
