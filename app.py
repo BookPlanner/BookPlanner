@@ -136,6 +136,14 @@ def sorting_priority():
         return render_template("main.html", cards=cards)
     else:
         return render_template("main.html", cards=cards)
+
+@app.route('/main/private', methods=['GET'])
+def sorting_private():
+    if request.method == 'GET':
+        cards = list(db.main.find({'private':True},{'_id':0}))
+        return render_template("main.html", cards=cards)
+    else:
+        return render_template("main.html", cards=cards)
         
 
 if __name__ == '__main__':

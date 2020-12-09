@@ -173,7 +173,8 @@
     <div class="wrap">
         <div style="margin-top: 15px;" align="right">
             <b>{{session['username']}}</b>님 안녕하세요.  &nbsp;&nbsp;
-            <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
+            <button type="button" class="btn btn-primary" onclick="location.href='/logout'">로그아웃</button>
+            <button type="button" class="btn btn-primary" onclick="location.href='/'">홈으로</button>
         </div>
         <div style="text-align: center; margin-top: 30px; margin-bottom: 80px; font-size: 80px;">
             <strong> Book Mark </strong>
@@ -183,6 +184,7 @@
         <button class="button is-small is-info is-rounded" onclick="location.href='/main'">등록일순 🔼</button>
         <button class="button is-small is-success is-rounded" onclick="location.href='/main/book'">도서명순 🔽</button>
         <button class="button is-small is-danger is-rounded" onclick="location.href='/main/priority'">중요도순 🔽</button>
+        <button class="button is-small is-warning is-rounded" onclick="location.href='/main/private'">나만볼거야 🔽</button>
         <!-- <span class="badge rounded-pill bg-primary" onclick="location.href='/main'">기본</span>
         <span class="badge rounded-pill bg-secondary" >도서</span>
         <span class="badge rounded-pill bg-success" >중요도</span> -->
@@ -357,8 +359,8 @@
                     <div class="col">
                     <div class="row" > 
                         <div class="col-5" style="margin-left: 10px">
-                            <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
-                            <div style="margin-left: 20px; margin-top: 10px;">
+                            <!-- <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;"> -->
+                            <div style=" margin-top: 10px;">
                                 <b>{{ card['title'] }}</b>   
                                 <span class="icon" style="background-color: white; margin-left: 10px;">
                                     <ion-icon name="bag-check"></ion-icon>
@@ -424,8 +426,8 @@
                 <div class="col">
                 <div class="row" > 
                     <div class="col-5" style="margin-left: 10px">
-                        <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
-                        <div style="margin-left: 20px; margin-top: 10px;">
+                        <!-- <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;"> -->
+                        <div style=" margin-top: 10px;">
                             <b>{{ card['title'] }}</b>   
                             
                         </div>
