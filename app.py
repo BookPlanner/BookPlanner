@@ -22,9 +22,6 @@ def signin():
         userid = request.form.get('userid')
         password = request.form.get('password')
         password_check = request.form.get('password_check')
-        # print(userid)
-        # print(password)
-        # print(password_check)
 
     # 예외상황일 때 경고창 띄워주기    
     if not userid and password and password_check:
@@ -38,9 +35,9 @@ def signin():
             'password':password
         }
         db.user.insert_one(data)
-        return jsonify({'msg': "회원가입 완료", '어디로 연결할까요?':'홈 화면 or 메인페이지'})
+        return redirect('/login')
     # 정상적으로 회원가입이 완료되고난 후 home 화면으로 이동(추후에 메인페이지나 로그인 페이지로 변경 가능)
-    return redirect('/')
+    return redirect('/login')
 
 # 로그인 구현
 @app.route('/login', methods=['GET','POST'])
@@ -59,7 +56,7 @@ def login():
                 # 세션을 생성해 주고 홈 화면으로 이동(추후 메인페이지로 변경 가능)
                 session['username'] = userid
                 return redirect('/')
-        return jsonify({'msg':'잘못된 정보'})
+        return render_template('error.html')
 
 # 로그아웃
 @app.route('/logout')
@@ -70,6 +67,8 @@ def logout():
 @app.route('/main', methods=['GET','POST'])
 def main():
     if request.method == 'GET':
+        cards = list(db.messages.find({'_id': False}).sort('created_datetime', -1))
+        print(cards)
         return render_template('main.html')
     else:
         card_id_receive = request.form['card_id_give']
@@ -77,12 +76,13 @@ def main():
         title_receive = request.form['title_give']
         context_receive = request.form['context_give']
         priority_receive = request.form['priority_give']
-        # writer 추가 수정 필요
+        writer = session['username']
         completed = False
         private = False
         created_datetime = datetime.datetime.now()
 
         data = {
+            'writer' : writer,
             'card_id' : card_id_receive,
             'title' : title_receive,
             'context' : context_receive,
@@ -110,7 +110,6 @@ if 'username' in session:
 # session 내부에 username 이라는 키 값이 없으면 바로 return으로 간다. 
 username = session['username'] # 있으면 해당 키에 대한 값을 꺼내서 
 return 'Logged in as ' + username + '<br>' + \ # 이 부분을 리턴시킨다. 
-
 '''
 
 
