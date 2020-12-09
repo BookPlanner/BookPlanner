@@ -80,6 +80,7 @@ def main():
         completed = False
         private = False
         created_datetime = datetime.datetime.now()
+        display_datetime = datetime.datetime.now().strftime('%Y-%m-%d')
 
         data = {
             'writer' : writer,
@@ -90,8 +91,8 @@ def main():
             'booktitle' : booktitle_receive,
             'completed' : completed,
             'private' : private,
-            'created_datetime' : created_datetime
-
+            'created_datetime' : created_datetime,
+            'display_datetime' : display_datetime
         }
         db.main.insert_one(data)
         return redirect('/main')
@@ -116,7 +117,6 @@ if 'username' in session:
 username = session['username'] # 있으면 해당 키에 대한 값을 꺼내서 
 return 'Logged in as ' + username + '<br>' + \ # 이 부분을 리턴시킨다. 
 '''
-
 
 
 if __name__ == '__main__':
