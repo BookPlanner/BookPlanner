@@ -83,6 +83,7 @@ def main():
         completed = False
         private = False
         created_datetime = datetime.datetime.now()
+        display_datetime = datetime.datetime.now().strftime('%Y-%m-%d')
 
         data = {
             'writer' : writer,
@@ -93,8 +94,8 @@ def main():
             'booktitle' : booktitle_receive,
             'completed' : completed,
             'private' : private,
-            'created_datetime' : created_datetime
-
+            'created_datetime' : created_datetime,
+            'display_datetime' : display_datetime
         }
         db.main.insert_one(data)
         return redirect('/main')
@@ -116,7 +117,26 @@ def update():
         return render_template('main.html', target_card = target_card)
         
 
+<<<<<<< HEAD
         
+=======
+
+'''
+# 로그인확인 구현할때 참고하려고 넣어놓은 주석
+
+#로그인을 했는지 안했는지 판단
+routes.py from flask import Flask, render_template, request, make_response 
+from flask import session, redirect, url_for app = Flask(__name__) app.secret_key = 'any random string' # 자바의 welcomlist와 같이 만들어지는 부분 
+
+@app.route('/') 
+def index(): 
+if 'username' in session: 
+# session 내부에 username 이라는 키 값이 없으면 바로 return으로 간다. 
+username = session['username'] # 있으면 해당 키에 대한 값을 꺼내서 
+return 'Logged in as ' + username + '<br>' + \ # 이 부분을 리턴시킨다. 
+'''
+
+>>>>>>> upstream/main
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
