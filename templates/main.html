@@ -83,6 +83,13 @@
         }
     }
 }
+
+function radioFlag(){
+    var temp = $('input:radio[name="chk_info"]:checked').val();
+    alert(temp);
+}
+
+
     </script> 
 
 <script>
@@ -182,7 +189,7 @@
   </button>
   
   <div class="sort">
-    <input  id="id1" type="radio" name="chk_info" checked="checked" value="register"><label for="id1">등록 순서</label> 
+    <input  id="id1" type="radio" name="chk_info" checked="checked" value="register" onclick="radioFlag()"><label for="id1">등록 순서</label> 
     <input  id="id2" type="radio" name="chk_info" value="book"> <label for="id2">책별 순서</label>
     <input  id="id3" type="radio" name="chk_info" value="importance"> <label for="id3">중요도 순서</label>
 </div>
@@ -204,15 +211,15 @@
                   <br>
                   <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%">
                       <label>
-                          <input type="radio" name="options" id="option1" autocomplete="off" value="뚜잇!파이썬" checked> 뚜잇!파이썬
+                          <input type="radio" name="book_options" id="option1" autocomplete="off" value="뚜잇!파이썬" checked> 뚜잇!파이썬
                           &nbsp;&nbsp;&nbsp;
                       </label>
                       <label >
-                          <input type="radio" name="options" id="option2" autocomplete="off" value="INTRO..ALGO.."> INTRO..ALGO..
+                          <input type="radio" name="book_options" id="option2" autocomplete="off" value="INTRO..ALGO.."> INTRO..ALGO..
                           &nbsp;&nbsp;&nbsp;
                       </label>
                       <label>
-                          <input type="radio" name="options" id="option3" autocomplete="off" value="컴퓨터시스템"> 컴퓨터시스템
+                          <input type="radio" name="book_options" id="option3" autocomplete="off" value="컴퓨터시스템"> 컴퓨터시스템
                           &nbsp;&nbsp;&nbsp;
                       </label>
                   </div>
@@ -317,10 +324,10 @@
                 <br>
                 <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-secondary active">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Public
+                    <input type="radio" name="plus_options" id="option1" autocomplete="off" checked> Public
                   </label>
                   <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="option2" autocomplete="off"> Private
+                    <input type="radio" name="plus_options" id="option2" autocomplete="off"> Private
                   </label>
                 </div>
             </li>
