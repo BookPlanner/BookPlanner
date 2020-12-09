@@ -30,7 +30,6 @@
     <style type="text/css">
         * {
             font-family: 'Noto Sans KR, sans-serif;
-
         }
 
         .wrap {
@@ -43,7 +42,7 @@
         }
 
         .sort {
-            text-align: right;
+            text-align: right; 
             margin-top: 10px;
         }
 
@@ -52,78 +51,79 @@
             height: 200px;
             border: 5px black;
         }
+        
     </style>
 
 
-    <script>
+<script>
+ 
+ function radioFlag(){
+    var temp = $('input:radio[name="chk_info"]:checked').val();
 
-        function radioFlag() {
-            var temp = $('input:radio[name="chk_info"]:checked').val();
+    
+    $.ajax({
+    type: "GET",
+    url: '/main/book',
+    data: {
+    },
+    success: function (response) {
 
+        window.location.reload();
 
-            $.ajax({
-                type: "GET",
-                url: '/main/book',
-                data: {
-                },
-                success: function (response) {
+        
+    }
+    })
 
-                    window.location.reload();
+    $.ajax({
+    type: "GET",
+    url: '/main/priority',
+    data: {
+    },
+    success: function (response) {
 
+        window.location.reload();
+    }
+    })
+    }
 
-                }
-            })
+    
+    
 
-            $.ajax({
-                type: "GET",
-                url: '/main/priority',
-                data: {
-                },
-                success: function (response) {
+    function createCard(){
+        var title = $('input[name=title]').val();
+        var context = $('textarea#context').val();
+        var priority = $('input[name=priority]').val();
+        var booktitle = $('input[name="options"]:checked').val();
+        var private = $('input[name="private"]:checked').val();
 
-                    window.location.reload();
-                }
-            })
+        alert(title+" "+context+" "+priority+" "+booktitle+" "+private)  
+
+        $.ajax({
+        type: "POST",
+        url: '/main',
+        data: {
+            'card_id_give' : genRandomName(10),
+            'title_give': title,
+            'context_give': context,
+            'priority_give': priority,
+            'booktitle_give': booktitle,
+            'private_flag':private
+        },
+        success: function (response) {
+            if (response['result'] == 'success') {
+                let card = response['card'];
+
+                alert("저장완료")
+                // $('#exampleModal').modal('hide');
+                // $('#exampleModal').hide();
+                window.location.reload();
+
+            }
         }
+    });
+    }
 
-
-
-
-        function createCard() {
-            var title = $('input[name=title]').val();
-            var context = $('textarea#context').val();
-            var priority = $('input[name=priority]').val();
-            var booktitle = $('input[name="options"]:checked').val();
-            var private = $('input[name="private"]:checked').val();
-
-            alert(title + " " + context + " " + priority + " " + booktitle + " " + private)
-
-            $.ajax({
-                type: "POST",
-                url: '/main',
-                data: {
-                    'card_id_give': genRandomName(10),
-                    'title_give': title,
-                    'context_give': context,
-                    'priority_give': priority,
-                    'booktitle_give': booktitle,
-                    'private_flag': private
-                },
-                success: function (response) {
-                    if (response['result'] == 'success') {
-                        let card = response['card'];
-
-                        alert("저장완료")
-                        // $('#exampleModal').modal('hide');
-                        // $('#exampleModal').hide();
-                        window.location.reload();
-
-                    }
-                }
-            });
-        }
-
-        function genRandomName(length) {
+    function genRandomName(length) {
             let result = '';
             let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             let charactersLength = characters.length;
@@ -133,393 +133,359 @@
                 result += characters.charAt(index);
             }
             return result;
+    }
+
+    function updateCard(cardId){
+        
+        $.ajax({
+        type: "POST",
+        url: '/main/update',
+        data: {
+            'target_card_id_give' : cardId
+        },
+        success: function (response) {
+             
         }
-
-        function updateCard(cardId) {
-
-            $.ajax({
-                type: "GET",
-                url: '/main/'+ cardId,
-                data: {
-                },
-                success: function (response) {
-
-                }
-            });
+    });
+    }
+    function deleteCard(cardId){
+        
+        $.ajax({
+        type: "DELETE",
+        url: '/main',
+        data: {
+            'card_id_give' : cardId
+            
+        },
+        success: function (response) {
+            alert("삭제되었습니다")
+            window.location.reload();   
         }
-        function deleteCard(cardId) {
+    });
+    }
 
-            $.ajax({
-                type: "DELETE",
-                url: '/main',
-                data: {
-                    'card_id_give': cardId
-
-                },
-                success: function (response) {
-                    alert("삭제되었습니다")
-                    window.location.reload();
-                }
-            });
-        }
-
-
-    </script>
+    
+</script>
 
 </head>
 
-<body>
+<body style="background-color: #FEFEFE;">
     <div class="wrap">
-        <div style="text-align: center; margin-top: 30px; font-size: 50px;">
+        <div style="margin-top: 15px;" align="right">
+            <b>{{session['username']}}</b>님 안녕하세요.  &nbsp;&nbsp;
+            <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
+        </div>
+        <div style="text-align: center; margin-top: 30px; margin-bottom: 80px; font-size: 80px;">
             <strong> Book Mark </strong>
-            <div align="right">
-                <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
-            </div>
-        </div>
-        <div class="sort">
-            <span class="badge rounded-pill bg-primary" onclick="location.href='/main'">기본</span>
-            <span class="badge rounded-pill bg-secondary" onclick="location.href='/main/book'">도서</span>
-            <span class="badge rounded-pill bg-success" onclick="location.href='/main/priority'">중요도</span>
-
-        </div>
-        <div>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-light default_content" data-toggle="modal"
-                data-target="#exampleModalCenter"><img src="../static/css/plus.png" />
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">추가하기</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    책 종류
-                                    <br>
-                                    <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%">
-                                        <label>
-                                            <input type="radio" name="options" id="option1" autocomplete="off"
-                                                value="뚜잇!파이썬" checked> 뚜잇!파이썬
-                                            &nbsp;&nbsp;&nbsp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="options" id="option2" autocomplete="off"
-                                                value="INTRO..ALGO.."> INTRO..ALGO..
-                                            &nbsp;&nbsp;&nbsp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="options" id="option3" autocomplete="off"
-                                                value="컴퓨터시스템"> 컴퓨터시스템
-                                            &nbsp;&nbsp;&nbsp;
-                                        </label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>제목</b>
-                                    <br>
-                                    <!-- name 태그를 넣어야 js에서 데이터를 가져올 수 있음 -->
-                                    <input type="text" id="title" name="title" style="width:100%;">
-                                    <!--꽉차도록-->
-                                </li>
-                                <li class="list-group-item">
-                                    <b>내용</b>
-                                    <br>
-                                    <textarea type="text" id="context" name="context" style="width:100%;"></textarea>
-                                </li>
-                                <!-- <li class="list-group-item">
-                  <b>마감기한</b>                
-                  <br>
-                  <input type="date" id="date" style="width:100%;">
-              </li> -->
-                                <li class="list-group-item">
-                                    <b>우선순위</b>
-                                    <br>
-                                    <input type="range" id="priority" name="priority" style="width:100%;">
-                                </li>
-                                <li class="list-group-item">
-                                    <b>수준</b>
-                                    <br>
-                                    <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary active">
-                                            <input type="radio" name="private" value="public" id="option1"
-                                                autocomplete="off" checked> Public
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                            <input type="radio" name="private" value="private" id="option2"
-                                                autocomplete="off"> Private
-                                        </label>
-                                    </div>
-                                </li>
-                                <input type="hidden" value="${loginUser}" name="loginUser">
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-primary" onclick="createCard()">추가</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- modify Modal -->
             
-            <div class="modal fade" id="modifyModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">수정하기</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    책 종류
-                                    {{ target_card }}
-                                    <br>
-                                    <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%">
-                                        <label>
-                                            <input type="radio" name="options" id="option1" autocomplete="off"
-                                                value="뚜잇!파이썬" checked> 뚜잇!파이썬
-                                            &nbsp;&nbsp;&nbsp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="options" id="option2" autocomplete="off"
-                                                value="INTRO..ALGO.."> INTRO..ALGO..
-                                            &nbsp;&nbsp;&nbsp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="options" id="option3" autocomplete="off"
-                                                value="컴퓨터시스템"> 컴퓨터시스템
-                                            &nbsp;&nbsp;&nbsp;
-                                        </label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>제목</b>
-                                    <br>
-                                    <!-- name 태그를 넣어야 js에서 데이터를 가져올 수 있음 -->
-                                    <input type="text" id="title" name="title" style="width:100%;">
-                                    <!--꽉차도록-->
-                                </li>
-                                <li class="list-group-item">
-                                    <b>내용</b>
-                                    <br>
-                                    <textarea type="text" id="context" name="context" style="width:100%;"></textarea>
-                                </li>
-                                <!-- <li class="list-group-item">
+       </div>
+       <div class="sort">
+        <button class="button is-small is-info is-rounded" onclick="location.href='/main'">등록일순 🔼</button>
+        <button class="button is-small is-success is-rounded" onclick="location.href='/main/book'">도서명순 🔽</button>
+        <button class="button is-small is-danger is-rounded" onclick="location.href='/main/priority'">중요도순 🔽</button>
+        <!-- <span class="badge rounded-pill bg-primary" onclick="location.href='/main'">기본</span>
+        <span class="badge rounded-pill bg-secondary" >도서</span>
+        <span class="badge rounded-pill bg-success" >중요도</span> -->
+        
+    </div> 
+    <div style="margin-top: 15px;">
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-light default_content border-bottom border-right rounded" data-toggle="modal" data-target="#exampleModalCenter"><img src="../static/css/plus.png"/>
+  </button>
+
+<!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"><b>추가하기</b></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+              <li class="list-group-item">
+                  책 종류
+                  <br>
+                  <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%">
+                      <label>
+                          <input type="radio" name="options" id="option1" autocomplete="off" value="뚜잇!파이썬" checked> 뚜잇!파이썬
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label >
+                          <input type="radio" name="options" id="option2" autocomplete="off" value="INTRO..ALGO.."> INTRO..ALGO..
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label>
+                          <input type="radio" name="options" id="option3" autocomplete="off" value="컴퓨터시스템"> 컴퓨터시스템
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                  </div>
+              </li>
+              <li class="list-group-item">
+                  <b>제목</b>
+                  <br>
+                  <!-- name 태그를 넣어야 js에서 데이터를 가져올 수 있음 -->
+                  <input type="text" id="title" name="title" style="width:100%;"> <!--꽉차도록-->
+              </li>
+              <li class="list-group-item">
+                  <b>내용</b>
+                  <br>
+                  <textarea type="text" id="context" name="context" style="width:100%;"></textarea>
+              </li>
+              <!-- <li class="list-group-item">
                   <b>마감기한</b>                
                   <br>
                   <input type="date" id="date" style="width:100%;">
               </li> -->
-                                <li class="list-group-item">
-                                    <b>우선순위</b>
-                                    <br>
-                                    <input type="range" id="priority" name="priority" style="width:100%;">
-                                </li>
-                                <li class="list-group-item">
-                                    <b>보호수준</b>
-                                    <br>
-                                    <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary active">
-                                            <input type="radio" name="options" id="option1" autocomplete="off" checked>
-                                            Public
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                            <input type="radio" name="options" id="option2" autocomplete="off"> Private
-                                        </label>
-                                    </div>
-                                </li>
-                                <input type="hidden" value="${loginUser}" name="loginUser">
-                            </ul>
+              <li class="list-group-item">
+                  <b>우선순위</b>
+                  <br>
+                  <input type="range" id="priority" name="priority" style="width:100%;">
+              </li>
+              <li class="list-group-item">
+                <b>나만 보기</b>
+                <br>
+                <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-secondary active">
+                    <input type="radio" name="private" value="public" id="option1" autocomplete="off" checked> Public
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="private" value="private" id="option2" autocomplete="off"> Private
+                  </label>
+                </div>
+            </li>
+              <input type="hidden" value="${loginUser}" name="loginUser">
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary" onclick="createCard()">추가</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- modify Modal -->
+  <div class="modal fade" id="modifyModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"><b style="color: red;">수정</b>하기</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+              <li class="list-group-item">
+                  책 종류
+                  <br>
+                  <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%">
+                      <label>
+                          <input type="radio" name="options" id="option1" autocomplete="off" value="뚜잇!파이썬" checked> 뚜잇!파이썬
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label >
+                          <input type="radio" name="options" id="option2" autocomplete="off" value="INTRO..ALGO.."> INTRO..ALGO..
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                      <label>
+                          <input type="radio" name="options" id="option3" autocomplete="off" value="컴퓨터시스템"> 컴퓨터시스템
+                          &nbsp;&nbsp;&nbsp;
+                      </label>
+                  </div>
+              </li>
+              <li class="list-group-item">
+                  <b>제목</b>
+                  <br>
+                  <!-- name 태그를 넣어야 js에서 데이터를 가져올 수 있음 -->
+                  <input type="text" id="title" name="title" style="width:100%;"> <!--꽉차도록-->
+              </li>
+              <li class="list-group-item">
+                  <b>내용</b>
+                  <br>
+                  <textarea type="text" id="context" name="context" style="width:100%;"></textarea>
+              </li>
+              <!-- <li class="list-group-item">
+                  <b>마감기한</b>                
+                  <br>
+                  <input type="date" id="date" style="width:100%;">
+              </li> -->
+              <li class="list-group-item">
+                  <b>우선순위</b>
+                  <br>
+                  <input type="range" id="priority" name="priority" style="width:100%;">
+              </li>
+              <li class="list-group-item">
+                <b>나만 보기</b>
+                <br>
+                <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-secondary active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Public
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> Private
+                  </label>
+                </div>
+            </li>
+              <input type="hidden" value="${loginUser}" name="loginUser">
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-danger" onclick="">수정</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- card1 start -->
+  <div id="cards-box">
+    <!-- 서버에서 보내준 데이터(cards) 받아오기 -->
+    {% for card in cards %}
+        
+        {% if card['private'] == True %}
+            {% if card['writer'] == session['username'] %}
+                <div class="card" style="width: 100%; margin-top: 10px;">
+                    <span class="border-bottom border border-primary rounded">
+                    <div>
+                        <div class="col">
+                    <div class="col">
+                    <div class="row" > 
+                        <div class="col-5" style="margin-left: 10px">
+                            <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
+                            <div style="margin-left: 20px; margin-top: 10px;">
+                                <b>{{ card['title'] }}</b>   
+                                <span class="icon" style="background-color: white; margin-left: 10px;">
+                                    <ion-icon name="bag-check"></ion-icon>
+                                </span>
+                            </div>
+                        
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-danger" onclick="">수정</button>
+                        <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
+                            {{ card['display_datetime'] }}   
+                        </div>
+                        <div class="col" >
+                            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                                {{ card['booktitle'] }}
+                            </button>
+                        </div>
+                        <div class="col" style="margin-top: 10px; text-align: right;">
+                            {% set v = card['priority']|int %}
+                            {% if v >= 80 %}
+                            <span class="tag is-danger">
+                                🔥 High
+                            {% elif v >= 50 %}
+                            <span class="tag is-warning">
+                                ⚠ Normal
+                            {% elif v >= 20 %}
+                            <span class="tag is-primary">
+                                ☕ Low
+                            {% else %}
+                            <span class="tag is-link is-light">
+                                Day by Day
+                            </span>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                    <hr style="margin-top: 8px; margin-bottom: 5px;">
+                    <div class="row">
+                        <div class="col">
+                            <div class ="text" style="color: grey;">{{ card['context'] }}</div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-            <!-- card1 start -->
-            <div id="cards-box">
-                <!-- 서버에서 보내준 데이터(cards) 받아오기 -->
-                {% for card in cards %}
-
-                {% if card['private'] == True %}
-                {% if card['writer'] == session['username'] %}
-                <div class="card" style="width: 100%; margin-top: 10px;">
-                    <span class="border-bottom border border-primary rounded">
-                        <div>
-                            <div class="col">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-5" style="margin-left: 10px">
-                                            <input type="checkbox" class="form-check-input" id="done123456s"
-                                                style="width: 25px; height: 25px; margin-top: 10px;">
-                                            <div style="margin-left: 20px; margin-top: 10px;">
-                                                <b>{{ card['title'] }}</b>
-                                                <span class="icon" style="background-color: yellow; margin-left: 10px;">
-                                                    img
-                                                    <ion-icon name="lock-closed-outline"></ion-icon>
-                                                </span>
-                                            </div>
-
-                                        </div>
-                                        <div class="col"
-                                            style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
-                                            {{ card['display_datetime'] }}
-                                        </div>
-                                        <div class="col">
-                                            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm"
-                                                data-container="body" data-toggle="popover" data-placement="top"
-                                                data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-                                                {{ card['booktitle'] }}
-                                            </button>
-                                        </div>
-                                        <div class="col" style="margin-top: 10px; text-align: right;">
-                                            {% set v = card['priority']|int %}
-                                            {% if v >= 80 %}
-                                            <span class="tag is-danger">
-                                                🔥 High
-                                                {% elif v >= 50 %}
-                                                <span class="tag is-warning">
-                                                    ⚠ Normal
-                                                    {% elif v >= 20 %}
-                                                    <span class="tag is-primary">
-                                                        ☕ Low
-                                                        {% else %}
-                                                        <span class="tag is-link is-light">
-                                                            Day by Day
-                                                        </span>
-                                                        {% endif %}
-                                        </div>
-
-                                    </div>
-                                    <hr style="margin-top: 8px; margin-bottom: 5px;">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="text" style="color: grey;">{{ card['context'] }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row justify-content-between">
-                                <div class="col-4">
-                                    <button type="button" class="btn btn-outline-primary btn-sm"
-                                        style="margin: 20px 3px 10px 20px;"
-                                        onclick="updateCard('{{ card["card_id"] }}')" data-toggle="modal"
-                                        data-target="#modifyModalCenter">수정</button>
-                                    <button type="button" class="btn btn-outline-danger btn-sm"
-                                        style="margin: 20px 10px 10px 0px;"
-                                        onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
-                                </div>
-                                <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
-                                    {{ card['writer']}}
-                                </div>
-
-                            </div>
-                            <input type="hidden" id="{{ card['card_id'] }}" name="card_id"
-                                value="{{ card['card_id'] }}">
                         </div>
-                    </span>
+                    <div class="row justify-content-between">
+                    <div class="col-4"> 
+                    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" onclick="updateCard('{{ card["card_id"] }}')" data-toggle="modal" data-target="#modifyModalCenter">수정</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
+                    </div>
+                    <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
+                        {{ card['writer']}}
+                    </div>
+                    
                 </div>
-                {% endif %}
-                {% else %}
-                <div class="card" style="width: 100%; margin-top: 10px;">
-                    <span class="border-bottom border border-primary rounded">
-                        <div>
-                            <div class="col">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-5" style="margin-left: 10px">
-                                            <input type="checkbox" class="form-check-input" id="done123456s"
-                                                style="width: 25px; height: 25px; margin-top: 10px;">
-                                            <div style="margin-left: 20px; margin-top: 10px;">
-                                                <b>{{ card['title'] }}</b>
-                                                <span class="icon" style="background-color: yellow; margin-left: 10px;">
-                                                    img
-                                                    <ion-icon name="lock-closed-outline"></ion-icon>
-                                                </span>
-                                            </div>
-
-                                        </div>
-                                        <div class="col"
-                                            style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
-                                            {{ card['display_datetime'] }}
-                                        </div>
-                                        <div class="col">
-                                            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm"
-                                                data-container="body" data-toggle="popover" data-placement="top"
-                                                data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-                                                {{ card['booktitle'] }}
-                                            </button>
-                                        </div>
-                                        <div class="col" style="margin-top: 10px; text-align: right;">
-                                            {% set v = card['priority']|int %}
-                                            {% if v >= 80 %}
-                                            <span class="tag is-danger">
-                                                🔥 High
-                                                {% elif v >= 50 %}
-                                                <span class="tag is-warning">
-                                                    ⚠ Normal
-                                                    {% elif v >= 20 %}
-                                                    <span class="tag is-primary">
-                                                        ☕ Low
-                                                        {% else %}
-                                                        <span class="tag is-link is-light">
-                                                            Day by Day
-                                                        </span>
-                                                        {% endif %}
-                                        </div>
-
-                                    </div>
-                                    <hr style="margin-top: 8px; margin-bottom: 5px;">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="text" style="color: grey;">{{ card['context'] }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row justify-content-between">
-                                <div class="col-4">
-                                    <button type="button" class="btn btn-outline-primary btn-sm"
-                                        style="margin: 20px 3px 10px 20px;"
-                                        onclick="updateCard('{{ card["card_id"] }}')" data-toggle="modal"
-                                        data-target="#modifyModalCenter">수정</button>
-                                    <button type="button" class="btn btn-outline-danger btn-sm"
-                                        style="margin: 20px 10px 10px 0px;"
-                                        onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
-                                </div>
-                                <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
-                                    {{ card['writer']}}
-                                </div>
-
-                            </div>
-                            <input type="hidden" id="{{ card['card_id'] }}" name="card_id"
-                                value="{{ card['card_id'] }}">
+                <input type="hidden" id="{{ card['card_id'] }}" name="card_id" value="{{ card['card_id'] }}">
+                </div>
+                </span>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="card" style="width: 100%; margin-top: 10px;">
+                <span class="border-bottom border border-primary rounded">
+                <div>
+                    <div class="col">
+                <div class="col">
+                <div class="row" > 
+                    <div class="col-5" style="margin-left: 10px">
+                        <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
+                        <div style="margin-left: 20px; margin-top: 10px;">
+                            <b>{{ card['title'] }}</b>   
+                            
                         </div>
-                    </span>
+                    
+                    </div>
+                    <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
+                        {{ card['display_datetime'] }}   
+                    </div>
+                    <div class="col" >
+                        <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                            {{ card['booktitle'] }}
+                        </button>
+                    </div>
+                    <div class="col" style="margin-top: 10px; text-align: right;">
+                        {% set v = card['priority']|int %}
+                        {% if v >= 80 %}
+                        <span class="tag is-danger">
+                            🔥 High
+                        {% elif v >= 50 %}
+                        <span class="tag is-warning">
+                            ⚠ Normal
+                        {% elif v >= 20 %}
+                        <span class="tag is-primary">
+                            ☕ Low
+                        {% else %}
+                        <span class="tag is-link is-light">
+                            Day by Day
+                        </span>
+                        {% endif %}
+                    </div>
+                    
                 </div>
-                {% endif %}
-                <!-- card start -->
-                {% endfor %}
-                <!-- card1 end -->
-
+                <hr style="margin-top: 8px; margin-bottom: 5px;">
+                <div class="row">
+                    <div class="col">
+                        <div class ="text" style="color: grey;">{{ card['context'] }}</div>
+                    </div>
+                </div>
             </div>
+                    </div>
+                <div class="row justify-content-between">
+                <div class="col-4"> 
+                <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" onclick="updateCard('{{ card["card_id"] }}')" data-toggle="modal" data-target="#modifyModalCenter">수정</button>
+                <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
+                </div>
+                <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
+                    {{ card['writer']}}
+                </div>
+                
+            </div>
+            <input type="hidden" id="{{ card['card_id'] }}" name="card_id" value="{{ card['card_id'] }}">
+            </div>
+            </span>
+            </div>
+        {% endif %}
+    <!-- card start -->
+{% endfor %}
+<!-- card1 end -->
+
+</div>
 </body>
 
 </html>
