@@ -11,6 +11,8 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Ionicones JS -->
+    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -126,7 +128,7 @@
         <div class="modal-body">
           <ul class="list-group">
               <li class="list-group-item">
-                  책 종류
+                  <b>책 종류</b>
                   <br>
                   <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%">
                       <label>
@@ -164,6 +166,18 @@
                   <br>
                   <input type="range" id="priority" name="priority" style="width:100%;">
               </li>
+              <li class="list-group-item">
+                  <b>보호수준</b>
+                  <br>
+                  <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Public
+                    </label>
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Private
+                    </label>
+                  </div>
+              </li>
               <input type="hidden" value="${loginUser}" name="loginUser">
           </ul>
         </div>
@@ -183,7 +197,13 @@
     <div class="row" > 
         <div class="col-5" style="margin-left: 10px">
             <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
-            <div style="margin-left: 20px; margin-top: 10px;""><b>알고리즘의 기초 설명 description.</b></div>
+            <div style="margin-left: 20px; margin-top: 10px;"">
+                <b>알고리즘의 기초 설명 description.</b>   
+                <span class="icon" style="background-color: yellow; margin-left: 10px;"> img
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                </span>
+            </div>
+         
         </div>
         <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
             2020-12-08 23:20    
