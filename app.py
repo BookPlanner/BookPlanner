@@ -3,7 +3,8 @@ import datetime
 app = Flask(__name__)
 app.secret_key = 'jeongseojeongseo' # secret key는 랜덤 문자열로 설정
 from pymongo import MongoClient     # pymongo를 임포트 하기(패키지 인스톨 먼저 해야겠죠?)
-client = MongoClient('localhost', 27017)  
+# client = MongoClient('localhost', 27017) 
+client = MongoClient('mongodb://test:test@13.209.22.135', 27017)
 db = client.dbtest                  # 임시로 dbtest에 저장      
 
 ## home화면 보여주기
