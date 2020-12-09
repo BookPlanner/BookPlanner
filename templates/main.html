@@ -140,7 +140,7 @@
                       </label>
                   </div>
               </li>
-              <li class="list-group-item active">
+              <li class="list-group-item">
                   <b>제목</b>
                   <br>
                   <!-- name 태그를 넣어야 js에서 데이터를 가져올 수 있음 -->
@@ -223,9 +223,21 @@
             </button>
         </div>
         <div class="col" style="margin-top: 10px; text-align: right;">
+            {% set v = card['priority']|int %}
+            {% if v >= 80 %}
+            <span class="tag is-danger">
+                🔥 High
+            {% elif v >= 50 %}
+            <span class="tag is-warning">
+                ⚠ Normal
+            {% elif v >= 20 %}
             <span class="tag is-primary">
-                {{ card['priority'] }}
+                ☕ Low
+            {% else %}
+            <span class="tag is-link is-light">
+                Day by Day
             </span>
+            {% endif %}
         </div>
         
     </div>
