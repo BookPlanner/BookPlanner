@@ -52,37 +52,59 @@
             border: 5px black;
         }
         
+        /* 미리보기 스타일 셋팅 */
+		#preview{
+			z-index: 9999;
+			position:absolute;
+			border:0px solid #ccc;
+			background:white;
+			padding:0px;
+			display:none;
+			color:#fff;
+		}
+
+        .menu { 
+            width: 500px; 
+            height: 500px; 
+            position: relative; 
+            top: 0; 
+            left: -100px 
+        }
+        .menu img { 
+            position: absolute; 
+            clip: rect(0 299px 29px 193px) 
+        }
+
     </style>
 
+    <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script> 
     <script type="text/javascript"> 
     
-    function agree() { 
-        var chkbox = document.getElementsByName('agree'); 
-        var chk = false; 
-        for(var i=0 ; i<chkbox.length ; i++) 
-        { 
-            if(chkbox[i].checked) chk = true; 
-            else { chk = false; } 
-        } 
-        if(chk) 
-        { 
-            alert("모든 약관에 동의함."); 
-            return false; 
-        } 
-        else 
-        { 
-            alert("모든 약관에 동의해 주세요.") 
-        } 
-     } 
-
-    function doOpenCheck(chk){
-    var obj = document.getElementsByName("aaa");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != chk){
-            obj[i].checked = false;
-        }
-    }
-}
+    $(document).ready(function() {
+                 
+                 var xOffset = 10;
+                 var yOffset = 30;
+ 
+                 $(document).on("mouseover",".thumbnail",function(e){ //마우스 오버시
+                     
+                     $("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='150px' /></p>"); //보여줄 이미지를 선언						 
+                     $("#preview")
+                         .css("top",(e.pageY - xOffset) + "px")
+                         .css("left",(e.pageX + yOffset) + "px")
+                         .fadeIn("fast"); //미리보기 화면 설정 셋팅
+                 });
+                 
+                 $(document).on("mousemove",".thumbnail",function(e){ //마우스 이동시
+                     $("#preview")
+                         .css("top",(e.pageY - xOffset) + "px")
+                         .css("left",(e.pageX + yOffset) + "px");
+                 });
+                 
+                 $(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
+                     $("#preview").remove();
+                 });
+                  
+             });
 
 function radioFlag(){
     var temp = $('input:radio[name="chk_info"]:checked').val();
@@ -191,8 +213,17 @@ function radioFlag(){
     </div>
   </div>
 
+  <div class="menu">
+    <img src="../static/css/doit.jpg" class="thumbnail" height='100px' />
+    <img src="../static/css/algorithm.jpg" class="thumbnail" height='100px' />
+    <img src="../static/css/computer.jpg" class="thumbnail" height='100px' />
 
+    <!-- <img src="menu.png" alt="menu" title="menu" width="490" height="490" /> -->
+</div>
 
+<img src="../static/css/doit.jpg" class="thumbnail" height='100px' />
+<img src="../static/css/algorithm.jpg" class="thumbnail" height='100px' />
+<img src="../static/css/computer.jpg" class="thumbnail" height='100px' />
 
   <!-- card1 start -->
   <div id="cards-box">
