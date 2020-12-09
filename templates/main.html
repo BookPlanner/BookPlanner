@@ -54,46 +54,41 @@
         
     </style>
 
-    <script type="text/javascript"> 
-    
-    function agree() { 
-        var chkbox = document.getElementsByName('agree'); 
-        var chk = false; 
-        for(var i=0 ; i<chkbox.length ; i++) 
-        { 
-            if(chkbox[i].checked) chk = true; 
-            else { chk = false; } 
-        } 
-        if(chk) 
-        { 
-            alert("모든 약관에 동의함."); 
-            return false; 
-        } 
-        else 
-        { 
-            alert("모든 약관에 동의해 주세요.") 
-        } 
-     } 
-
-    function doOpenCheck(chk){
-    var obj = document.getElementsByName("aaa");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != chk){
-            obj[i].checked = false;
-        }
-    }
-}
-
-function radioFlag(){
-    var temp = $('input:radio[name="chk_info"]:checked').val();
-    alert(temp);
-}
-
-
-    </script> 
 
 <script>
  
+ function radioFlag(){
+    var temp = $('input:radio[name="chk_info"]:checked').val();
+
+    
+    $.ajax({
+    type: "GET",
+    url: '/main/book',
+    data: {
+    },
+    success: function (response) {
+
+        window.location.reload();
+
+        
+    }
+    })
+
+    $.ajax({
+    type: "GET",
+    url: '/main/priority',
+    data: {
+    },
+    success: function (response) {
+
+        window.location.reload();
+    }
+    })
+    }
+
+    
+    
+
     function createCard(){
         var title = $('input[name=title]').val();
         var context = $('textarea#context').val();
@@ -111,7 +106,8 @@ function radioFlag(){
             'title_give': title,
             'context_give': context,
             'priority_give': priority,
-            'booktitle_give': booktitle
+            'booktitle_give': booktitle,
+            'private_flag':private
         },
         success: function (response) {
             if (response['result'] == 'success') {
@@ -167,14 +163,13 @@ function radioFlag(){
         }
     });
     }
+
+    
 </script>
+
 </head>
 
 <body>
-
-
-
-
     <div class="wrap">
         <div style="text-align: center; margin-top: 30px; font-size: 50px;">
             <strong> Book Mark </strong>
@@ -182,17 +177,17 @@ function radioFlag(){
                <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
            </div>
        </div>
+       <div class="sort">
+        <span class="badge rounded-pill bg-primary" onclick="location.href='/main'">기본</span>
+        <span class="badge rounded-pill bg-secondary" onclick="location.href='/main/book'">도서</span>
+        <span class="badge rounded-pill bg-success" onclick="location.href='/main/priority'">중요도</span>
+        
+    </div> 
     <div>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-light default_content" data-toggle="modal" data-target="#exampleModalCenter"><img src="../static/css/plus.png"/>
   </button>
-  
-  <div class="sort">
-    <input  id="id1" type="radio" name="chk_info" checked="checked" value="register" onclick="radioFlag()"><label for="id1">등록 순서</label> 
-    <input  id="id2" type="radio" name="chk_info" value="book"> <label for="id2">책별 순서</label>
-    <input  id="id3" type="radio" name="chk_info" value="importance"> <label for="id3">중요도 순서</label>
-</div>
 
 <!-- Modal -->
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -211,15 +206,15 @@ function radioFlag(){
                   <br>
                   <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%">
                       <label>
-                          <input type="radio" name="book_options" id="option1" autocomplete="off" value="뚜잇!파이썬" checked> 뚜잇!파이썬
+                          <input type="radio" name="options" id="option1" autocomplete="off" value="뚜잇!파이썬" checked> 뚜잇!파이썬
                           &nbsp;&nbsp;&nbsp;
                       </label>
                       <label >
-                          <input type="radio" name="book_options" id="option2" autocomplete="off" value="INTRO..ALGO.."> INTRO..ALGO..
+                          <input type="radio" name="options" id="option2" autocomplete="off" value="INTRO..ALGO.."> INTRO..ALGO..
                           &nbsp;&nbsp;&nbsp;
                       </label>
                       <label>
-                          <input type="radio" name="book_options" id="option3" autocomplete="off" value="컴퓨터시스템"> 컴퓨터시스템
+                          <input type="radio" name="options" id="option3" autocomplete="off" value="컴퓨터시스템"> 컴퓨터시스템
                           &nbsp;&nbsp;&nbsp;
                       </label>
                   </div>
@@ -250,10 +245,10 @@ function radioFlag(){
                 <br>
                 <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-secondary active">
-                    <input type="radio" name="private" id="option1" autocomplete="off" checked> Public
+                    <input type="radio" name="private" value="public" id="option1" autocomplete="off" checked> Public
                   </label>
                   <label class="btn btn-secondary">
-                    <input type="radio" name="private" id="option2" autocomplete="off"> Private
+                    <input type="radio" name="private" value="private" id="option2" autocomplete="off"> Private
                   </label>
                 </div>
             </li>
@@ -324,10 +319,10 @@ function radioFlag(){
                 <br>
                 <div style="width: 100%;" class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-secondary active">
-                    <input type="radio" name="plus_options" id="option1" autocomplete="off" checked> Public
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Public
                   </label>
                   <label class="btn btn-secondary">
-                    <input type="radio" name="plus_options" id="option2" autocomplete="off"> Private
+                    <input type="radio" name="options" id="option2" autocomplete="off"> Private
                   </label>
                 </div>
             </li>
@@ -347,185 +342,145 @@ function radioFlag(){
   <div id="cards-box">
     <!-- 서버에서 보내준 데이터(cards) 받아오기 -->
     {% for card in cards %}
-
-    <!-- 테스트 코드 여기부터-->
-    {{ card }}
-    <!-- 여기까지 -->
-
-
-    <!-- card start -->
-  <div class="card" style="width: 100%; margin-top: 10px;">
-    <span class="border-bottom border border-primary rounded">
-    <div>
-        <div class="col">
-    <div class="col">
-    <div class="row" > 
-        <div class="col-5" style="margin-left: 10px">
-            <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
-            <div style="margin-left: 20px; margin-top: 10px;">
-                <b>{{ card['title'] }}</b>   
-                <span class="icon" style="background-color: yellow; margin-left: 10px;"> img
-                    <ion-icon name="lock-closed-outline"></ion-icon>
-                </span>
-            </div>
-         
-        </div>
-        <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
-            {{ card['display_datetime'] }}   
-        </div>
-        <div class="col" >
-            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-                {{ card['booktitle'] }}
-            </button>
-        </div>
-        <div class="col" style="margin-top: 10px; text-align: right;">
-            {% set v = card['priority']|int %}
-            {% if v >= 80 %}
-            <span class="tag is-danger">
-                🔥 High
-            {% elif v >= 50 %}
-            <span class="tag is-warning">
-                ⚠ Normal
-            {% elif v >= 20 %}
-            <span class="tag is-primary">
-                ☕ Low
-            {% else %}
-            <span class="tag is-link is-light">
-                Day by Day
-            </span>
-            {% endif %}
-        </div>
         
-    </div>
-    <hr style="margin-top: 8px; margin-bottom: 5px;">
-    <div class="row">
-        <div class="col">
-            <div class ="text" style="color: grey;">{{ card['context'] }}</div>
-        </div>
-    </div>
-</div>
-        </div>
-    <div class="row justify-content-between">
-    <div class="col-4"> 
-    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" onclick="updateCard('{{ card["card_id"] }}')" data-toggle="modal" data-target="#modifyModalCenter">수정</button>
-    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
-    </div>
-    <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
-        {{ card['writer']}}
-    </div>
-    
-</div>
-<input type="hidden" id="{{ card['card_id'] }}" name="card_id" value="{{ card['card_id'] }}">
-  </div>
-</span>
-</div>
+        {% if card['private'] == True %}
+            {% if card['writer'] == session['username'] %}
+                <div class="card" style="width: 100%; margin-top: 10px;">
+                    <span class="border-bottom border border-primary rounded">
+                    <div>
+                        <div class="col">
+                    <div class="col">
+                    <div class="row" > 
+                        <div class="col-5" style="margin-left: 10px">
+                            <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
+                            <div style="margin-left: 20px; margin-top: 10px;">
+                                <b>{{ card['title'] }}</b>   
+                                <span class="icon" style="background-color: yellow; margin-left: 10px;"> img
+                                    <ion-icon name="lock-closed-outline"></ion-icon>
+                                </span>
+                            </div>
+                        
+                        </div>
+                        <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
+                            {{ card['display_datetime'] }}   
+                        </div>
+                        <div class="col" >
+                            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                                {{ card['booktitle'] }}
+                            </button>
+                        </div>
+                        <div class="col" style="margin-top: 10px; text-align: right;">
+                            {% set v = card['priority']|int %}
+                            {% if v >= 80 %}
+                            <span class="tag is-danger">
+                                🔥 High
+                            {% elif v >= 50 %}
+                            <span class="tag is-warning">
+                                ⚠ Normal
+                            {% elif v >= 20 %}
+                            <span class="tag is-primary">
+                                ☕ Low
+                            {% else %}
+                            <span class="tag is-link is-light">
+                                Day by Day
+                            </span>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                    <hr style="margin-top: 8px; margin-bottom: 5px;">
+                    <div class="row">
+                        <div class="col">
+                            <div class ="text" style="color: grey;">{{ card['context'] }}</div>
+                        </div>
+                    </div>
+                </div>
+                        </div>
+                    <div class="row justify-content-between">
+                    <div class="col-4"> 
+                    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" onclick="updateCard('{{ card["card_id"] }}')" data-toggle="modal" data-target="#modifyModalCenter">수정</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
+                    </div>
+                    <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
+                        {{ card['writer']}}
+                    </div>
+                    
+                </div>
+                <input type="hidden" id="{{ card['card_id'] }}" name="card_id" value="{{ card['card_id'] }}">
+                </div>
+                </span>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="card" style="width: 100%; margin-top: 10px;">
+                <span class="border-bottom border border-primary rounded">
+                <div>
+                    <div class="col">
+                <div class="col">
+                <div class="row" > 
+                    <div class="col-5" style="margin-left: 10px">
+                        <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
+                        <div style="margin-left: 20px; margin-top: 10px;">
+                            <b>{{ card['title'] }}</b>   
+                            <span class="icon" style="background-color: yellow; margin-left: 10px;"> img
+                                <ion-icon name="lock-closed-outline"></ion-icon>
+                            </span>
+                        </div>
+                    
+                    </div>
+                    <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
+                        {{ card['display_datetime'] }}   
+                    </div>
+                    <div class="col" >
+                        <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                            {{ card['booktitle'] }}
+                        </button>
+                    </div>
+                    <div class="col" style="margin-top: 10px; text-align: right;">
+                        {% set v = card['priority']|int %}
+                        {% if v >= 80 %}
+                        <span class="tag is-danger">
+                            🔥 High
+                        {% elif v >= 50 %}
+                        <span class="tag is-warning">
+                            ⚠ Normal
+                        {% elif v >= 20 %}
+                        <span class="tag is-primary">
+                            ☕ Low
+                        {% else %}
+                        <span class="tag is-link is-light">
+                            Day by Day
+                        </span>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+                <hr style="margin-top: 8px; margin-bottom: 5px;">
+                <div class="row">
+                    <div class="col">
+                        <div class ="text" style="color: grey;">{{ card['context'] }}</div>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                <div class="row justify-content-between">
+                <div class="col-4"> 
+                <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;" onclick="updateCard('{{ card["card_id"] }}')" data-toggle="modal" data-target="#modifyModalCenter">수정</button>
+                <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;" onclick="deleteCard('{{ card["card_id"] }}')">삭제</button>
+                </div>
+                <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
+                    {{ card['writer']}}
+                </div>
+                
+            </div>
+            <input type="hidden" id="{{ card['card_id'] }}" name="card_id" value="{{ card['card_id'] }}">
+            </div>
+            </span>
+            </div>
+        {% endif %}
+    <!-- card start -->
 {% endfor %}
 <!-- card1 end -->
-
-
-<!-- <div class="card" style="width: 100%; margin-top: 10px;">
-    <span class="border-bottom border border-primary rounded">
-    <div>
-        <div class="col">
-    <div class="col">
-    <div class="row" > 
-        <div class="col-5" style="margin-left: 10px">
-            <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
-            <div style="margin-left: 20px; margin-top: 10px;"><b>CentOS 제작 과정 링크.</b></div>
-        </div>
-        <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
-            2020-12-01 23:20    
-        </div>
-        <div class="col" >
-            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-                컴퓨터시스템
-            </button>
-        </div>
-        <div class="col" style="margin-top: 10px; text-align: right;">
-            <span class="tag is-danger">🔥 High</span>
-        </div>
-    </div>
-    <hr style="margin-top: 8px; margin-bottom: 5px;">
-    <div class="row">
-        <div class="col">
-            <div class ="text" style="color: grey;">function showMemos() {
-                $.ajax({
-                    type: "GET",
-                    url: "/memo",
-                    data: {},
-                    success: function (response) {
-                        let memos = response["memos"];
-                        console.log(memos);
-                        for (let i = 0; i < memos.length; i++) {
-                            $("#cards-box").append(tempHtml);
-                        }
-                        안녕<br>
-                        안녕<br>
-                        안녕<br>
-
-                        안녕
-
-                    }
-                })
-            }</div>
-        </div>
-    </div>
-</div>
-        </div>
-    <div class="row justify-content-between">
-    <div class="col-4">
-    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;">수정</button>
-    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;">삭제</button>
-    </div>
-    <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
-        한정서
-    </div>
-</div>
-  </div>
-</span>
-</div>
-<div class="card" style="width: 100%; margin-top: 10px;">
-    <span class="border-bottom border border-primary rounded">
-    <div>
-        <div class="col">
-    <div class="col">
-    <div class="row" > 
-        <div class="col-5" style="margin-left: 10px">
-            <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
-            <div style="margin-left: 20px; margin-top: 10px;""><b>BFS 쉽게 이해하는법 10분 컷.</b></div>
-        </div>
-        <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
-            2020-12-06 23:20    
-        </div>
-        <div class="col" >
-            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-                Do It! 자료구조와 함께하는 알고리즘
-            </button>
-        </div>
-        <div class="col" style="margin-top: 10px; text-align: right;">
-            <span class="tag is-info">😁 Low</span>
-        </div>
-    </div>
-    <hr style="margin-top: 8px; margin-bottom: 5px;">
-    <div class="row">
-        <div class="col">
-            <div class ="text" style="color: grey;">내용</div>
-        </div>
-    </div>
-</div>
-        </div>
-    <div class="row justify-content-between">
-    <div class="col-4">
-    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;">수정</button>
-    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;">삭제</button>
-    </div>
-    <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
-        오태양
-    </div>
-</div>
-  </div>
-</span>
-</div> -->
 
 </div>
 </body>
