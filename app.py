@@ -79,9 +79,14 @@ def main():
         title_receive = request.form['title_give']
         context_receive = request.form['context_give']
         priority_receive = request.form['priority_give']
+        flag = request.form['private_flag']
+
         writer = session['username']
         completed = False
-        private = False
+        if flag == 'private':
+            private = True
+        else:
+            private = False
         created_datetime = datetime.datetime.now()
         display_datetime = datetime.datetime.now().strftime('%Y-%m-%d')
 
@@ -90,7 +95,7 @@ def main():
             'card_id' : card_id_receive,
             'title' : title_receive,
             'context' : context_receive,
-            'priority' : priority_receive,
+            'priority' : int(priority_receive),
             'booktitle' : booktitle_receive,
             'completed' : completed,
             'private' : private,
@@ -116,7 +121,22 @@ def update():
         print(target_card)
         return render_template('main.html', target_card = target_card)
         
+@app.route('/main/book', methods=['GET'])
+def sorting_book():
+    if request.method == 'GET':
+        cards = list(db.main.find({},{'_id':0}).sort('booktitle'))
+        return render_template("main.html", cards=cards)
+    else:
+        return render_template("main.html")
 
+@app.route('/main/priority', methods=['GET'])
+def sorting_priority():
+    if request.method == 'GET':
+        cards = list(db.main.find({},{'_id':0}).sort('priority', -1))
+        print(cards)
+        return render_template("main.html", cards=cards)
+    else:
+        return render_template("main.html", cards=cards)
         
 
 if __name__ == '__main__':
