@@ -223,9 +223,21 @@
             </button>
         </div>
         <div class="col" style="margin-top: 10px; text-align: right;">
+            {% set v = card['priority']|int %}
+            {% if v >= 80 %}
+            <span class="tag is-danger">
+                🔥 High
+            {% elif v >= 50 %}
+            <span class="tag is-warning">
+                ⚠ Normal
+            {% elif v >= 20 %}
             <span class="tag is-primary">
-                {{ card['priority'] }}
+                ☕ Low
+            {% else %}
+            <span class="tag is-link is-light">
+                Day by Day
             </span>
+            {% endif %}
         </div>
         
     </div>
