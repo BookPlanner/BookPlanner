@@ -9,7 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -26,7 +27,7 @@
     <!-- style -->
     <style type="text/css">
         * {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Noto Sans KR, sans-serif;
         }
 
         .wrap {
@@ -34,11 +35,11 @@
             margin: auto;
         }
 
-        /* .default {
-            
-        } */
+        .modal-backdrop {
+            z-index: 0;
+        }
 
-        .defaul_content {
+        .default_content {
             width: 100%;
             height: 200px;
             border: 5px black;
@@ -75,101 +76,11 @@
     }
 }
     </script> 
-
-
-
-    <!-- <script>
-        $(document).ready(function () {
-            $("#cards-box").html("");
-            showMemos();
-        });
-        function postMemo() {
-            let title = $("#memo-title").val();
-            let memo = $("#memo").val();
-            $.ajax({
-                type: "POST",
-                url: "/memo",
-                data: { title_give: title, memo_give: memo },
-                success: function (response) {
-                    if (response["result"] == "success") {
-                        alert("저장 완료!");
-                        window.location.reload();
-                    } else {
-                        alert("서버 오류!")
-                    }
-                }
-            })
-        }
-        function showMemos() {
-            $.ajax({
-                type: "GET",
-                url: "/memo",
-                data: {},
-                success: function (response) {
-                    let memos = response["memos"];
-                    console.log(memos);
-                    for (let i = 0; i < memos.length; i++) {
-                        let tempHtml = `<div id="card-${i}" class="card">
-                                <h4 class="card-title"> ${memos[i]["title"]} </h4>
-                                <p class="card-text">${memos[i]["memo"]}</p>
-                                <button type="button" class="btn btn-secondary btn-sm" onclick="modifyMemo('${i}','${memos[i]["title"]}','${memos[i]["memo"]}')">수정</button>
-                                <button type="button" class="btn btn-dark btn-sm" onclick="deleteMemo('${memos[i]["title"]}')">삭제</button>
-                            </div>`
-                        $("#cards-box").append(tempHtml);
-                    }
-                }
-            })
-        }
-        function deleteMemo(title) {
-            $.ajax({
-                type: "POST",
-                url: "/memo/delete",
-                data: { 'title_give': title },
-                success: function (response) {
-                    if (response['result'] == 'success') {
-                        alert('삭제 완료!')
-                        window.location.reload()
-                    }
-                }
-            });
-        }
-        function modifyMemo(memo_id, title, memo) {
-            $('#card-' + memo_id).empty();
-            tempHtml = `<div class="form-group"> 
-                   <input id="memo-title-change" class="form-control" value="${title}">   
-                   </div>
-                   <div class="form-group">
-                   <textarea id="memo-change" class="form-control" rows="2">${memo}</textarea>
-                   </div>
-              <button type="button" class="btn btn-primary btn-sm" onclick="changeMemo('${title}')">저장</button>`
-            $('#card-' + memo_id).append(tempHtml);
-        }
-        function changeMemo(old_title) {
-            let new_title = $("#memo-title-change").val();
-            let new_memo = $("#memo-change").val();
-            $.ajax({
-                type: "POST",
-                url: "/memo/change",
-                data: { old_title_give: old_title, title_give: new_title, memo_give: new_memo },
-                success: function (response) {
-                    if (response["result"] == "success") {
-                        alert("수정 완료!");
-                        window.location.reload();
-                    } else {
-                        alert("서버 오류!")
-                    }
-                }
-            })
-        }
-    </script> -->
-
 </head>
-
 <body>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-[Modal] 콘텐츠 추가</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">[Modal] 콘텐츠 추가</button>
 
     <div class="wrap">
         <div class="jumbotron">
@@ -183,81 +94,9 @@
         </div>
         <div>
             <!-- Button trigger modal -->
-<button type="button" class="btn btn-light defaul_content" data-toggle="modal" data-target="#exampleModalCenter"><img src="../static/css/plus.png"/>
+<button type="button" class="btn btn-light default_content" data-toggle="modal" data-target="#exampleModalCenter"><img src="../static/css/plus.png"/>
   </button>
   
-
-
-
-
-
-
-<!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">추가하기</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <ul class="list-group">
-              <li class="list-group-item">
-                  책 종류
-                  <br>
-                  <div class="btn-group btn-group-toggle" data-group="buttons" style="width:100%;">
-                      <label>
-                          <input type="radio" name="options" id="option1" autocomplete="off" checked> 뚜잇!파이썬
-                          &nbsp;&nbsp;&nbsp;
-                      </label>
-                      <label >
-                          <input type="radio" name="options" id="option2" autocomplete="off"> INTRO..ALGO..
-                          &nbsp;&nbsp;&nbsp;
-                      </label>
-                      <label>
-                          <input type="radio" name="options" id="option3" autocomplete="off"> 컴퓨터시스템
-                          &nbsp;&nbsp;&nbsp;
-                      </label>
-                  </div>
-              </li>
-              <li class="list-group-item active">
-                  <b>제목</b>
-                  <br>
-                  <input type="text" id="subject" style="width:100%;"> <!--꽉차도록-->
-              </li>
-              <li class="list-group-item">
-                  <b>내용</b>
-                  <br>
-                  <textarea type="text" id="context" style="width:100%;"></textarea>
-              </li>
-              <li class="list-group-item">
-                  <b>마감기한</b>                
-                  <br>
-                  <input type="date" id="date" style="width:100%;">
-              </li>
-              <li class="list-group-item">
-                  <b>우선순위</b>
-                  <br>
-                  <input type="range" id="priority" style="width:100%;">
-              </li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-          <button type="button" class="btn btn-primary">추가</button>
-        </div>
-        <div>
-            <!-- Button trigger modal -->
-<button type="button" class="btn btn-light defaul_content" data-toggle="modal" data-target="#exampleModalCenter"><img src="../static/css/plus.png"/>
-  </button>
-  
-
-
-
-
-
 
 <!-- Modal -->
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -321,41 +160,150 @@
     </div>
   </div>
 
-  <div class="card" style="width: 100%; margin-top: 10px;">
+  <div class="card" style="width: 100%; margin-top: 10px;"">
+    <span class="border-bottom border border-primary rounded">
     <div>
         <div class="col">
     <div class="col">
-    <div class="row">
-        <div class="col">
-            이 책은 5개월동안 볼수가 없어.
+    <div class="row" > 
+        <div class="col-5" style="margin-left: 10px">
+            <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
+            <div style="margin-left: 20px; margin-top: 10px;""><b>알고리즘의 기초 설명 description.</b></div>
         </div>
-        <div class="col">
-            컴퓨터시스템
+        <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
+            2020-12-08 23:20    
         </div>
-        <div class="col">
-            등록일
+        <div class="col" >
+            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                Introduction To Algorithm
+            </button>
         </div>
-        <div class="col">
-            마감일
-        </div>
-        <div class="col">
-            등록인
-        </div>
-        <div class="col">
-            중요도
+        <div class="col" style="margin-top: 10px; text-align: right;">
+            <span class="tag is-primary">Normal</span>
         </div>
     </div>
+    <hr style="margin-top: 8px; margin-bottom: 5px;">
     <div class="row">
         <div class="col">
-            내용
+            <div class ="text" style="color: grey;">내용</div>
         </div>
     </div>
 </div>
         </div>
-        <hr>
-    <button type="button" class="btn btn-outline-primary btn-sm" style="margin-right: 5px;">수정</button>
-    <button type="button" class="btn btn-outline-danger btn-sm">삭제</button>
+    <div class="row justify-content-between">
+    <div class="col-4">
+    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;">수정</button>
+    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;">삭제</button>
+    </div>
+    <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
+        김형우
+    </div>
+</div>
   </div>
+</span>
+</div>
+<div class="card" style="width: 100%; margin-top: 10px;"">
+    <span class="border-bottom border border-primary rounded">
+    <div>
+        <div class="col">
+    <div class="col">
+    <div class="row" > 
+        <div class="col-5" style="margin-left: 10px">
+            <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
+            <div style="margin-left: 20px; margin-top: 10px;""><b>CentOS 제작 과정 링크.</b></div>
+        </div>
+        <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
+            2020-12-01 23:20    
+        </div>
+        <div class="col" >
+            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                컴퓨터시스템
+            </button>
+        </div>
+        <div class="col" style="margin-top: 10px; text-align: right;">
+            <span class="tag is-danger">🔥 High</span>
+        </div>
+    </div>
+    <hr style="margin-top: 8px; margin-bottom: 5px;">
+    <div class="row">
+        <div class="col">
+            <div class ="text" style="color: grey;">function showMemos() {
+                $.ajax({
+                    type: "GET",
+                    url: "/memo",
+                    data: {},
+                    success: function (response) {
+                        let memos = response["memos"];
+                        console.log(memos);
+                        for (let i = 0; i < memos.length; i++) {
+                            $("#cards-box").append(tempHtml);
+                        }
+                        안녕<br>
+                        안녕<br>
+                        안녕<br>
+
+                        안녕
+
+                    }
+                })
+            }</div>
+        </div>
+    </div>
+</div>
+        </div>
+    <div class="row justify-content-between">
+    <div class="col-4">
+    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;">수정</button>
+    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;">삭제</button>
+    </div>
+    <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
+        한정서
+    </div>
+</div>
+  </div>
+</span>
+</div>
+<div class="card" style="width: 100%; margin-top: 10px;"">
+    <span class="border-bottom border border-primary rounded">
+    <div>
+        <div class="col">
+    <div class="col">
+    <div class="row" > 
+        <div class="col-5" style="margin-left: 10px">
+            <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
+            <div style="margin-left: 20px; margin-top: 10px;""><b>BFS 쉽게 이해하는법 10분 컷.</b></div>
+        </div>
+        <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
+            2020-12-06 23:20    
+        </div>
+        <div class="col" >
+            <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                Do It! 자료구조와 함께하는 알고리즘
+            </button>
+        </div>
+        <div class="col" style="margin-top: 10px; text-align: right;">
+            <span class="tag is-info">😁 Low</span>
+        </div>
+    </div>
+    <hr style="margin-top: 8px; margin-bottom: 5px;">
+    <div class="row">
+        <div class="col">
+            <div class ="text" style="color: grey;">내용</div>
+        </div>
+    </div>
+</div>
+        </div>
+    <div class="row justify-content-between">
+    <div class="col-4">
+    <button type="button" class="btn btn-outline-primary btn-sm" style="margin: 20px 3px 10px 20px;">수정</button>
+    <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;">삭제</button>
+    </div>
+    <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
+        오태양
+    </div>
+</div>
+  </div>
+</span>
 </div>
 </body>
 
