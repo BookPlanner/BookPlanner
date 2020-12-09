@@ -113,7 +113,7 @@ def update():
     else:
         card_id_receive = request.form['target_card_id_give']
         target_card = db.main.find_one({'card_id':card_id_receive},{'_id':0})
-        
+        print(target_card)
         return render_template('main.html', target_card = target_card)
         
 
