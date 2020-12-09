@@ -67,9 +67,8 @@ def logout():
 @app.route('/main', methods=['GET','POST'])
 def main():
     if request.method == 'GET':
-        cards = list(db.messages.find({'_id': False}).sort('created_datetime', -1))
-        print(cards)
-        return render_template('main.html')
+        cards = list(db.main.find({},{'_id':0}))
+        return render_template("main.html", data=cards)
     else:
         card_id_receive = request.form['card_id_give']
         booktitle_receive = request.form['booktitle_give']
@@ -96,6 +95,10 @@ def main():
         db.main.insert_one(data)
         return redirect('/main')
     
+@app.route('/main/list', methods=['GET','POST'])
+def mainlisting():
+    cards = list(db.main.find({},{'_id':0}.sort('created_datetime', -1)))
+    return render_template("main.html", cards=cards)
 
 '''
 # 로그인확인 구현할때 참고하려고 넣어놓은 주석

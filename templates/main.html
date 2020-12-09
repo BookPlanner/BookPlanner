@@ -184,7 +184,20 @@
     </div>
   </div>
 
+
+
+
   <!-- card1 start -->
+  <div id="cards-box">
+    <!-- 서버에서 보내준 데이터(cards) 받아오기 -->
+    {% for card in data %} 
+
+    <!-- 테스트 코드 여기부터-->
+    {{ card }}
+    <!-- 여기까지 -->
+
+
+    <!-- card start -->
   <div class="card" style="width: 100%; margin-top: 10px;">
     <span class="border-bottom border border-primary rounded">
     <div>
@@ -194,7 +207,7 @@
         <div class="col-5" style="margin-left: 10px">
             <input type="checkbox" class="form-check-input" id="done123456s" style="width: 25px; height: 25px; margin-top: 10px;">
             <div style="margin-left: 20px; margin-top: 10px;">
-                <b>알고리즘의 기초 설명 description.</b>   
+                <b>{{ card['title'] }}</b>   
                 <span class="icon" style="background-color: yellow; margin-left: 10px;"> img
                     <ion-icon name="lock-closed-outline"></ion-icon>
                 </span>
@@ -202,21 +215,24 @@
          
         </div>
         <div class="col" style="vertical-align: middle; margin-top: 14px; font-size: smaller; font-style: italic;">
-            2020-12-08 23:20    
+            {{ card['created_datetime']}}   
         </div>
         <div class="col" >
             <button style="margin-top: 8px;" type="button" class="btn btn-light btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-                Introduction To Algorithm
+                {{ card['booktitle'] }}
             </button>
         </div>
         <div class="col" style="margin-top: 10px; text-align: right;">
-            <span class="tag is-primary">Normal</span>
+            <span class="tag is-primary">
+                {{ card['priority'] }}
+            </span>
         </div>
+        
     </div>
     <hr style="margin-top: 8px; margin-bottom: 5px;">
     <div class="row">
         <div class="col">
-            <div class ="text" style="color: grey;">내용</div>
+            <div class ="text" style="color: grey;">{{ card['context'] }}</div>
         </div>
     </div>
 </div>
@@ -227,15 +243,19 @@
     <button type="button" class="btn btn-outline-danger btn-sm" style="margin: 20px 10px 10px 0px;">삭제</button>
     </div>
     <div class="col-4" style="margin-top: 20px; margin-right: 40px; text-align: right;">
-        김형우
+        {{ card['writer']}}
     </div>
+    
 </div>
+<input type="hidden" value="{{ card['card_id'] }}" name="{{ card['card_id'] }}">
   </div>
 </span>
 </div>
+{% endfor %}
 <!-- card1 end -->
 
-<div class="card" style="width: 100%; margin-top: 10px;">
+
+<!-- <div class="card" style="width: 100%; margin-top: 10px;">
     <span class="border-bottom border border-primary rounded">
     <div>
         <div class="col">
@@ -296,7 +316,7 @@
   </div>
 </span>
 </div>
-<div class="card" style="width: 100%; margin-top: 10px;"">
+<div class="card" style="width: 100%; margin-top: 10px;">
     <span class="border-bottom border border-primary rounded">
     <div>
         <div class="col">
@@ -337,11 +357,14 @@
 </div>
   </div>
 </span>
+</div> -->
+
 </div>
 </body>
 
 </html>
 <script>
+ 
     function createCard(){
         var title = $('input[name=title]').val();
         var context = $('textarea#context').val();
