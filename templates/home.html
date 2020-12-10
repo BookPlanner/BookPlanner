@@ -9,7 +9,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Ionicones JS -->
+    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -44,100 +47,7 @@
 
         }
     </style>
-    <!-- <script>
-        $(document).ready(function () {
-            $("#cards-box").html("");
-            showMemos();
-        });
 
-        function postMemo() {
-            let title = $("#memo-title").val();
-            let memo = $("#memo").val();
-            $.ajax({
-                type: "POST",
-                url: "/memo",
-                data: { title_give: title, memo_give: memo },
-                success: function (response) {
-                    if (response["result"] == "success") {
-                        alert("저장 완료!");
-                        window.location.reload();
-                    } else {
-                        alert("서버 오류!")
-                    }
-                }
-            })
-        }
-
-        function showMemos() {
-            $.ajax({
-                type: "GET",
-                url: "/memo",
-                data: {},
-                success: function (response) {
-                    let memos = response["memos"];
-                    console.log(memos);
-                    for (let i = 0; i < memos.length; i++) {
-                        let tempHtml = `<div id="card-${i}" class="card">
-                                <h4 class="card-title"> ${memos[i]["title"]} </h4>
-                                <p class="card-text">${memos[i]["memo"]}</p>
-                                <button type="button" class="btn btn-secondary btn-sm" onclick="modifyMemo('${i}','${memos[i]["title"]}','${memos[i]["memo"]}')">수정</button>
-                                <button type="button" class="btn btn-dark btn-sm" onclick="deleteMemo('${memos[i]["title"]}')">삭제</button>
-                            </div>`
-                        $("#cards-box").append(tempHtml);
-                    }
-                }
-            })
-        }
-
-        function deleteMemo(title) {
-            $.ajax({
-                type: "POST",
-                url: "/memo/delete",
-                data: { 'title_give': title },
-                success: function (response) {
-                    if (response['result'] == 'success') {
-                        alert('삭제 완료!')
-                        window.location.reload()
-                    }
-                }
-            });
-        }
-
-        function modifyMemo(memo_id, title, memo) {
-            $('#card-' + memo_id).empty();
-            tempHtml = `<div class="form-group"> 
-                   <input id="memo-title-change" class="form-control" value="${title}">   
-                   </div>
-                   <div class="form-group">
-                   <textarea id="memo-change" class="form-control" rows="2">${memo}</textarea>
-                   </div>
-              <button type="button" class="btn btn-primary btn-sm" onclick="changeMemo('${title}')">저장</button>`
-
-            $('#card-' + memo_id).append(tempHtml);
-        }
-
-        function changeMemo(old_title) {
-            let new_title = $("#memo-title-change").val();
-            let new_memo = $("#memo-change").val();
-
-            $.ajax({
-                type: "POST",
-                url: "/memo/change",
-                data: { old_title_give: old_title, title_give: new_title, memo_give: new_memo },
-                success: function (response) {
-                    if (response["result"] == "success") {
-                        alert("수정 완료!");
-                        window.location.reload();
-                    } else {
-                        alert("서버 오류!")
-                    }
-                }
-            })
-        }
-
-
-
-    </script> -->
     <script>
         function logout(){
             location.href = "/logout"
@@ -157,18 +67,30 @@
 
 <body>
     <div class="wrap">
-        <div class="jumbotron">
-            <h2 class="display-4">Book Study Planner</h2>
-            <div>
-                {% if session['username'] %}
-                <h3>{{session['username']}}님 환영합니다<br></h3>
-                <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
-                <button type="button" class="btn btn-primary" onclick="main()">플래너</button>
-                {% else %}
-                <button type="button" class="btn btn-primary" onclick="login()">로그인</button>
-                <button type="button" class="btn btn-primary" onclick="signin()">회원가입</button>
-                {% endif %}
-                
+        <div class="jumbotron jumbotron-fluid border-bottom" style="background-color: transparent; margin-left: 0px; margin-right: 0px;">
+            <div class="container">
+                <strong style="font-size: 80px;">Book Mark</strong>
+                <div>
+                    {% if session['username'] %}
+                    <h3 style="margin-bottom: 50px; font-size: 30px;"><b>{{session['username']}}</b>님 환영합니다<br></h3>
+                    <button type="button" style="width: 120px;" class="btn btn-primary btn-lg" onclick="logout()">로그아웃</button>
+                    <button type="button" style="width: 120px;" class="btn btn-primary btn-lg" onclick="main()">플래너 📚</button>
+                    <button type="button" style="width: 140px;" class="btn btn-dark btn-lg" onclick="window.open('https://github.com/BookPlanner/BookPlanner')">개발기록
+                        <span class="icon" style="background-color: #333344;">
+                            <ion-icon style="color: white;" name="logo-github"></ion-icon>
+                        </span>
+                    </button>
+                    {% else %}
+                    <h3 style="margin-bottom: 50px;"><br></h3>
+                    <button type="button" style="width: 120px;" class="btn btn-primary btn-lg" onclick="login()">로그인</button>
+                    <button type="button" style="width: 120px;" class="btn btn-primary btn-lg" onclick="signin()">회원가입</button>
+                    <button type="button" style="width: 140px;" class="btn btn-dark btn-lg" onclick="window.open('https://github.com/BookPlanner/BookPlanner')">개발기록
+                        <span class="icon" style="background-color: #333344;">
+                            <ion-icon style="color: white;" name="logo-github"></ion-icon>
+                        </span>
+                    </button>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
