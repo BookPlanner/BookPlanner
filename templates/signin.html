@@ -44,100 +44,38 @@
 
         }
     </style>
-    <!-- <script>
-        $(document).ready(function () {
-            $("#cards-box").html("");
-            showMemos();
-        });
+    
+    <script>
+        function chkPW(){   
 
-        function postMemo() {
-            let title = $("#memo-title").val();
-            let memo = $("#memo").val();
-            $.ajax({
-                type: "POST",
-                url: "/memo",
-                data: { title_give: title, memo_give: memo },
-                success: function (response) {
-                    if (response["result"] == "success") {
-                        alert("저장 완료!");
-                        window.location.reload();
-                    } else {
-                        alert("서버 오류!")
-                    }
-                }
-            })
+            var id = $("#userid").val();
+            var pw = $("#password").val();
+            var pw_check = $("#password_check").val();
+            
+            if(id.length == 0)
+            {
+                alert("아이디를 입력하세요");
+            }
+            else if(pw.search(/\s/) != -1)
+            {
+                alert("비밀번호는 공백 없이 입력해주세요.");
+            }
+            else if(pw.length < 6 || pw.length > 20)
+            {
+                alert("6자리 ~ 20자리 이내로 입력해주세요.");
+            }
+            else if(pw.length != pw_check.length)
+            {
+                alert("비밀번호를 다시 확인해주세요");
+            }
+
+            else 
+            {
+                console.log("통과"); 
+                // return true;
+            }
         }
-
-        function showMemos() {
-            $.ajax({
-                type: "GET",
-                url: "/memo",
-                data: {},
-                success: function (response) {
-                    let memos = response["memos"];
-                    console.log(memos);
-                    for (let i = 0; i < memos.length; i++) {
-                        let tempHtml = `<div id="card-${i}" class="card">
-                                <h4 class="card-title"> ${memos[i]["title"]} </h4>
-                                <p class="card-text">${memos[i]["memo"]}</p>
-                                <button type="button" class="btn btn-secondary btn-sm" onclick="modifyMemo('${i}','${memos[i]["title"]}','${memos[i]["memo"]}')">수정</button>
-                                <button type="button" class="btn btn-dark btn-sm" onclick="deleteMemo('${memos[i]["title"]}')">삭제</button>
-                            </div>`
-                        $("#cards-box").append(tempHtml);
-                    }
-                }
-            })
-        }
-
-        function deleteMemo(title) {
-            $.ajax({
-                type: "POST",
-                url: "/memo/delete",
-                data: { 'title_give': title },
-                success: function (response) {
-                    if (response['result'] == 'success') {
-                        alert('삭제 완료!')
-                        window.location.reload()
-                    }
-                }
-            });
-        }
-
-        function modifyMemo(memo_id, title, memo) {
-            $('#card-' + memo_id).empty();
-            tempHtml = `<div class="form-group"> 
-                   <input id="memo-title-change" class="form-control" value="${title}">   
-                   </div>
-                   <div class="form-group">
-                   <textarea id="memo-change" class="form-control" rows="2">${memo}</textarea>
-                   </div>
-              <button type="button" class="btn btn-primary btn-sm" onclick="changeMemo('${title}')">저장</button>`
-
-            $('#card-' + memo_id).append(tempHtml);
-        }
-
-        function changeMemo(old_title) {
-            let new_title = $("#memo-title-change").val();
-            let new_memo = $("#memo-change").val();
-
-            $.ajax({
-                type: "POST",
-                url: "/memo/change",
-                data: { old_title_give: old_title, title_give: new_title, memo_give: new_memo },
-                success: function (response) {
-                    if (response["result"] == "success") {
-                        alert("수정 완료!");
-                        window.location.reload();
-                    } else {
-                        alert("서버 오류!")
-                    }
-                }
-            })
-        }
-
-
-
-    </script> -->
+    </script>
 
 </head>
 
@@ -151,19 +89,19 @@
             <form method="POST" >
                 <div class="form-group">
                     <label for="userid">아이디</label>
-                    <input type="text" class="form-control" id="userid" placeholder="아이디를 입력하세요" name="userid"/>
+                    <input type="text" class="form-control" id="userid" placeholder="아이디를 입력해주세요" name="userid"/>
                     <!-- id는 삭제해도 되더라. 마지막에 name과 app.py의 get 메소드 사용하는 부분이 일치해야 상응한다 -->
                 </div>
                 
                 <div class="form-group">
                     <label for="password">비밀번호</label>
-                    <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요" name="password"/>
+                    <input type="password" class="form-control" id="password" placeholder="비밀번호를 공백 없이 6자리~20자리 입력해주세요" name="password"/>
                 </div>
                 <div class="form-group">
                     <label for="re_password">비밀번호확인</label>
-                    <input type="password" class="form-control" id="password_check" placeholder="비밀번호를 다시 입력하세요" name="password_check"/>
+                    <input type="password" class="form-control" id="password_check" placeholder="비밀번호가 맞는지 확인합니다" name="password_check"/>
                 </div>
-                <button type="submit" class="btn btn-primary">등록</button>
+                <button type="submit" class="btn btn-primary" onclick="chkPW()">등록</button>
             </form>
         </div>
         </div>

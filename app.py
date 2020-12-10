@@ -22,12 +22,20 @@ def signin():
         userid = request.form.get('userid')
         password = request.form.get('password')
         password_check = request.form.get('password_check')
+
     
     # 예외상황일 때 경고창 띄워주기    
-    if not userid and password and password_check:
-        return jsonify({'msg': "입력이 완료되지 않았습니다."})
+    if len(password)<6 or len(password)>20:
+        return render_template('signin.html')
+    elif ' ' in password:
+        return render_template('signin.html')
+
+
+    elif not userid and password and password_check:
+        return render_template('signin.html')
+    
     elif password != password_check:
-        return jsonify({'msg': "비밀번호를 확인해주세요"})
+        return render_template('signin.html')
     else:
         #정상적으로 입력 받았을 때 db에 입력
         data = {
@@ -35,7 +43,7 @@ def signin():
             'password':password
         }
         db.user.insert_one(data)
-        return redirect('/login')
+        return redirect('/')
     # 정상적으로 회원가입이 완료되고난 후 home 화면으로 이동(추후에 메인페이지나 로그인 페이지로 변경 가능)
     return redirect('/login')
 
