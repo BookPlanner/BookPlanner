@@ -6,11 +6,11 @@
 ## 0. 계획세우기
 
 ### 와이어프레임
-<img src="https://user-images.githubusercontent.com/26760693/101716973-c0b3e600-3ae1-11eb-9074-9179ee12ae57.png"  width="300" height="450">  
-<img src="https://user-images.githubusercontent.com/26760693/101716974-c1e51300-3ae1-11eb-8ebe-6451cb7f9668.png"  width="300" height="450">  
-<img src="https://user-images.githubusercontent.com/26760693/101716976-c1e51300-3ae1-11eb-9613-4b227be056c8.png"  width="300" height="450">  
-<img src="https://user-images.githubusercontent.com/26760693/101716977-c27da980-3ae1-11eb-85b5-7bd3b3c1ed88.png"  width="300" height="450">  
-<img src="https://user-images.githubusercontent.com/26760693/101716979-c3164000-3ae1-11eb-9fd2-8143d4a59266.png"  width="300" height="450">  
+<img src="https://user-images.githubusercontent.com/26760693/101716973-c0b3e600-3ae1-11eb-9074-9179ee12ae57.png"  width="150" height="225">  
+<img src="https://user-images.githubusercontent.com/26760693/101716974-c1e51300-3ae1-11eb-8ebe-6451cb7f9668.png"  width="150" height="225">  
+<img src="https://user-images.githubusercontent.com/26760693/101716976-c1e51300-3ae1-11eb-9613-4b227be056c8.png"  width="150" height="225">  
+<img src="https://user-images.githubusercontent.com/26760693/101716977-c27da980-3ae1-11eb-85b5-7bd3b3c1ed88.png"  width="150" height="225">  
+<img src="https://user-images.githubusercontent.com/26760693/101716979-c3164000-3ae1-11eb-9fd2-8143d4a59266.png"  width="150" height="225">  
 
 ### 파일관리
 1. Git을 통해 Organization group을 생성
