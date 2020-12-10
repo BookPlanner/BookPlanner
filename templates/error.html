@@ -1,3 +1,45 @@
-잘못된 정보입니다
+<!Doctype html>
+<html lang="ko">
 
-뒤로 가기를 해주세요
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- 구글폰트 -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+
+<title>home.html</title>
+<!-- style -->
+<style type="text/css">
+    * {
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+</style>
+<script>
+    function signin(){
+        location.href = "/signin"
+    }
+</script>
+
+<body>
+    <div class="wrap">
+        <div class="jumbotron">
+            <div>
+                <h3>잘못된 정보입니다</h3>
+
+                <h3>뒤로 가기 또는 회원가입을 눌러주세요</h3>
+                <button class="btn btn-primary" onclick="history.back()">뒤로가기</button>
+                <button class="btn btn-primary" onclick="signin()">회원가입</button>
+                
+            </div>
+        </div>
+    </div>
+
+    </div>
+</body>
+
+</html>
