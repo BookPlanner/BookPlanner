@@ -58,4 +58,4 @@
 | | |
 
 ## 3. 실행화면
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/61036124/101969290-f6360c00-3c66-11eb-9c6e-a039e62317ee.gif)
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/61036124/101969442-ae63b480-3c67-11eb-80f0-89a71e59e231.gif)
