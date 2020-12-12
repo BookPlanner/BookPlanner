@@ -56,3 +56,6 @@
 | 서버 | CRUD 처리 할수있는 템플릿 생성 | ✔ |
 | 서버 | 로그인/로그아웃(쿠키와 세션) | ✔ |
 | | |
+
+## 3. 실행화면
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/61036124/101969290-f6360c00-3c66-11eb-9c6e-a039e62317ee.gif)
